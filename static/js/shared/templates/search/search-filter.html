@@ -1,0 +1,23 @@
+<div class="search-filter dropdown" uib-dropdown is-open="search_opened">
+    <form>
+        <input type="text" ng-change="changeSearch(search)" ng-model="search" ng-model-options="{ debounce: 150 }" placeholder="Search">
+        <button class="btn-report-search-icon" type="submit" ng-click="filterSearch(search)"><i class="icon-search"></i></button>
+        <span class="report-filter-icon loading-icon"></span>
+    </form>
+    <ul class="dropdown-menu dropdown-search">
+        <li style="padding: 0 15px" ng-class="search_not_found ? 'visible' : 'invisible'">
+            <div>No report found that contain <b>{{search}}</b></div>
+        </li>
+        <li ng-class="search_not_found ? 'invisible' : 'visible'" ng-click="filterSearch(search)" ng-model="search">
+            <div class="search-filter-btn" ng-model="search"><i class="icon-filter-grey"></i> Filter {{search_object}} on <b>{{search}}</b></div>
+        </li>
+        <li style="padding: 0 15px" ng-class="show_navigate ? 'visible' : 'invisible'">
+            <div>OR NAVIGATE TO</div>
+        </li>
+        <li ng-repeat="item in search_data">
+            <a href="" ng-click="gotoDetail(item)" data-toggle="tooltip" title="{{ item.name }}">
+                <i class="icon-campaign-grey-2"></i>{{ item.name }}
+            </a>
+        </li>
+    </ul>
+</div>

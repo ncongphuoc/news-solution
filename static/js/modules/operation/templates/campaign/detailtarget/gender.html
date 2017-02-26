@@ -1,0 +1,52 @@
+<operations>
+    <div class="heading-page">
+        <adx-campaign-breadcumb></adx-campaign-breadcumb>
+        <div class="dropdown pull-right cus-breadcrumb">
+            <!-- Calander -->
+            <adx-date-picker datepicker="datepicker()" params="datePicker" from_date="from_date" to_date="to_date"></adx-date-picker>
+        </div>
+    </div>
+
+    <campaign-top-menu></campaign-top-menu>
+
+    <div class="inner-content">
+        <div class="wrap-table">
+            <div class="filter-bar filter-bar-head" style="padding-top: 0; padding-bottom: 20px">
+                <div class="split-v">
+                    <btn-target type="'demographic'"></btn-target>
+                </div>
+                <detail-campaign-target-sub-menu></detail-campaign-target-sub-menu>
+            </div>
+
+            <div class="demographic-tootbar-gender" style="margin-bottom: 20px">
+                <ul>
+                    <li><a class="active">Gender</a></li>
+                    <li><a ui-sref="campaigns.campaign.detail.target.demographic.age()">Age</a></li>
+                </ul>
+            </div>
+
+            <div class="wrap-chart">
+                <div class="wrap-chart-left">
+                    <!-- Filter top -->
+                    <filtertop data="data_filter_top" filtertop="filterTop()" params="filter_top_params"></filtertop>
+
+                    <filter filter-params="filter_params" filter-options="filter_options" action="applyFilter()"></filter>
+
+                    <chart settings="chart"></chart>
+                </div>
+            </div>
+
+            <!-- Filter bottom -->
+            <filterbottom idmodalcolumn="idmodal" filter="filterBottom()" params="filter_bottom_parrams" datasource="dataSource" typeItem="typeitem"></filterbottom>
+            <adx-editor source="selectedObject" edit-type="editType" ng-show="show_change_bid"></adx-editor>
+            <div class="wrap-table table-responsive scroll">
+                <div class="loading_grid">
+                    <div class="loading-icon"></div>
+                    <div class="txt-loading">Loading ...</div>
+                </div>
+                <grid params="grid_params" grid-options="grid_options" ng-model-object="selectedObject"></grid>
+            </div>
+
+        </div>
+    </div>
+</operations>

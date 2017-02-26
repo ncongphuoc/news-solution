@@ -1,0 +1,44 @@
+<div uib-dropdown class="date-ranger-picker" auto-close="disabled" is-open="opened">
+    <button type="button" uib-dropdown-toggle class="dropdown-button btn btn-default btn-dropdown-date">
+         <!--Last 7 days: Mar 2, 2016 - Mar 8, 2016-->
+        {{ rangeShow }} : {{ dateShow }}
+        <span class="caret"></span>
+        <!--<span class="compare-to" style="text-align: right">Compare to: Jan 23, 2016 - Feb 21, 2016</span>-->
+        <span ng-if="isShowCompare && visibleCompare" class="compare-to" style="text-align: right">Compare to: {{dateCompareShow}}</span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu>
+        <li class="date" ng-click="changeDate('custom', 'Custom')">
+            <span ng-class="{checked: rangeSelected == 'custom'}">Custom</span>
+            <input ng-readonly="true" ng-show="rangeSelected == 'custom'" type="text" set-min-date="[name='toDate']" jqdatepicker class="from_date" name="fromDate" ng-model="from_date"  placeholder="from">
+            <input ng-readonly="true" ng-show="rangeSelected == 'custom'" type="text" min-date="{{from_date}}" ref-min-date="[name='fromDate']" jqdatepicker class="to_date" name="toDate" ng-model="to_date" placeholder="to">
+        </li>
+        <li class="has-check" ng-repeat="range in ranges">
+            <a class="item-check" ng-click="changeDate(range.key, range.value)" ng-class="{checked: rangeSelected == range.key}">{{ range.value }}</a>
+        </li>
+        <li class="divider" ng-show="visibleCompare"></li>
+        <li class="compare" ng-show="visibleCompare"><span>Compare</span>
+            <div class="custom-switch">
+                <input type="checkbox" name="checkbox" id="checkbox-compare" ng-model="compareChecked" ng-checked="isShowCompare" ng-click="toggleCompare()">
+                <label for="checkbox-compare">&nbsp;</label>
+            </div>
+        </li>
+        <li class="has-check list-compare" ng-show="visibleCompare" ng-class="{collapse : !isShowCompare}">
+            <a class="item-check {{item.key}}" ng-repeat="item in compare" ng-click="changeCompare(item.key)"
+               ng-class="{checked: item.key == customCompare}">{{ item.value }}</a>
+
+            <div class="compare-custom" ng-click="changeCompare('custom')">
+                <a class="item-check custom" ng-class="{checked: 'custom' == customCompare}">Custom</a>
+                <span class="date">
+                    <input ng-readonly="true" type="text" ng-show="'custom' == customCompare" jqdatepicker set-min-date="[name='toRange']" class="from_range" name="fromRange" ng-model="from_range">
+                    <input ng-readonly="true" type="text" ng-show="'custom' == customCompare" min-date="{{from_range}}" ref-min-date="[name='fromRange']" jqdatepicker class="to_range" name="toRange" ng-model="to_range">
+                </span>
+            </div>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <div>
+                <button type="submit" class="btn btn-green" ng-click="apply()">Apply</button>
+            </div>
+        </li>
+    </ul>
+</div>

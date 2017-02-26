@@ -1,0 +1,41 @@
+<div class="left-block target-demo-block">
+    <h2>
+        <span class="text-dot">Demographics</span>
+        <span style="float: right"><a href="" ng-click="removeSelf(id)" ng-show="show_remove == true">x</a></span>
+    </h2>
+    <div class="inner" style="position: relative">
+        <div class="border">
+            <div class="inner-left">
+                <p class="sub-title">GENDER</p>
+                <ul class="list-checkbox">
+                    <li ng-repeat="gender in demo_graphics.gender">
+                        <label>
+                            <input type="checkbox" name="a" ng-model="gender.checked" ng-change="selectGender()"
+                                   class="icheck"><span>{{gender.gender_name}}</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="inner-center">
+                <p class="sub-title">AGE</p>
+                <ul class="list-checkbox">
+                    <li ng-repeat="age in demo_graphics.age | orderBy:'age_name'">
+                        <label>
+                            <input type="checkbox" ng-model="age.checked" class="icheck" ng-change="selectAge()"><span>{{age.age_name}}</span>
+                        </label>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+        <div class="demo_graphic_loading loading" style="opacity: 0.8">
+            <div class="loading-icon"></div>
+        </div>
+        <p class="text-bot-target">Reach a significantly wider audience by showing ads to people whose age, gender, or
+            parental status we do not know.</p>
+    </div>
+    <div class="btn-group-cus" ng-show="show_close">
+        <button type="button" class="btn btn-grey" ng-click="closeTarget(id)">Close</button>
+    </div>
+</div>

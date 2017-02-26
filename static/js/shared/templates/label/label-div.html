@@ -1,0 +1,12 @@
+<div class="color">
+
+    <span ng-repeat="item in data_label" class="lable-color {{item.class_color_label}}" style="background-color:{{item.color}};">{{item.label_name}}</span>
+</div>
+<a ng-if="data_label_pop.length > 2" ng-click="openLabel(id_div)" class="see-all" href="">See all {{data_label_pop.length}} labels...</a>
+<div id="label_{{id_div}}" class="{{classlabel}}" style="display:none">
+    <p>{{type}}<br/><strong>{{name}}</strong></p>
+    <a href="" ng-click="closeLabel(id_div)"><i class="icon-close"></i>close</a>
+    <ul>
+        <li ng-repeat="item in data_label_pop"><span style="background-color:{{item.color}};" class="{{item.class_color_label}}">{{item.label_name}}</span></li>
+    </ul>
+</div>

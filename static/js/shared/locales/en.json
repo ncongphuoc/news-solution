@@ -1,0 +1,8 @@
+{
+  "Username": "Username",
+  "Password": "Password",
+  "Enter username": "Enter username",
+  "Enter password": "Enter password",
+  "The password you entered is incorrect.": "The password you entered is incorrect.",
+  "Text_No_Label_Found":"No labels defined in this account"
+}

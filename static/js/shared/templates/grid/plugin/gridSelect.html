@@ -1,0 +1,36 @@
+<div ng-include="template"></div>
+
+<script type="text/ng-template" id="drop_down_select.html">
+    <div class="dropdown dropdown-grid-select" uib-dropdown auto-close="outsideClick"
+         ng-show="+selected.object_id != 0 && +data.is_default != 1">
+        <button type="button" class="btn btn-default" uib-dropdown-toggle>
+            {{selected.object_name}}<span class="caret"></span></button>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+            <li class="has-check" ng-repeat="object in objects">
+                <a href="" class="item-check" ng-click="selectObject(object)" ng-class="{checked: object.selected}">{{object.object_name}}</a>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="+data.is_default == 1">
+        {{selected.object_name}}
+    </div>
+    <div ng-show="+selected.object_id == 0">
+        {{'Removed' || translate}}
+    </div>
+</script>
+<script type="text/ng-template" id="text.html">
+    {{data[column_name]}}
+</script>
+<script type="text/ng-template" id="status_line_item.html">
+    {{data[column_name]}}
+    <div class="tooltip-warning">
+    <span class="ic-warning mr-0 ml-5" ng-if="arr_status_eligible.indexOf(+data.status_id) !== -1"><i class="ic-ants ic-ants-64"></i><i class="ic-ants ic-ants-65"></i>
+    </span>
+        <div class="lable-edit-text">
+            <p class="text-bids" ng-if="+data.status_id == lineitem_status_v3_eligible_lifetime">
+                Reached lifetime budget</p>
+            <p class="text-bids" ng-if="+data.status_id == lineitem_status_v3_eligible_daily">Reached daily budget</p>
+        </div>
+    </div>
+</script>
+

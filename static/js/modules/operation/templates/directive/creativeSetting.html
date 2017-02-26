@@ -1,0 +1,68 @@
+<div class="interest-block">
+    <div class="left-block target-placement target-remarketing">
+        <h2><span class="text-dot">Placement</span></h2>
+        <div class="inner">
+            <div class="border">
+                <div class="inner-left">
+                    <div class="box-search-target-1">
+                        <div class="form-group form-search">
+                            <input type="text" ng-model="search_server" placeholder="deviantart.com" class="form-control">
+                            <button type="submit"></button>
+                        </div>
+                    </div>
+                    <div class="wrap-table-left">
+                        <div class="top-header">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4><strong>Placement list: <span>{{data_total | number}}</span></strong></h4>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </div>
+                        <div class="left-content-target">
+                            <div class="scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions">
+                                <ul class="list-collapse">
+                                    <li ng-repeat="object in data_source">
+                                        <div class="target-parent">
+                                            <div class="row">
+                                                <div class="col-md-8"><a href="" data-toggle="collapse">{{object[config.object_name]}}</a></div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn-arrow"
+                                                        ng-class="{disable:object.checked}"
+                                                        ng-click="!object.checked && select(object)"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="loading">
+                                    <div class="loading-icon"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner-right">
+                    <div class="total">Selected: <strong>{{data_source_selected.length}}</strong></div>
+                    <div class="wrap-table-right">
+                        <div class="top-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4><strong>Placement list<!-- Remarketing lists -->: <span>{{data_source_selected.length}}</span></strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-content-target">
+                            <div class="bottom scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions">
+                                <div class="inner-row" ng-repeat="object in data_source_selected">
+                                    <span class="">{{object[config.object_name]}}</span>
+                                    <a href="" class="btn-close" ng-click="remove(object,$event)"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

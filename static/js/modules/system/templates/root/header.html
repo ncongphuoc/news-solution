@@ -1,0 +1,101 @@
+<div>
+    <header class="header" ng-class="{'header-collapse':getToggleNavbar()}" ng-show="isAuthenticated == true">
+        <div class="container-fluid">
+            <a ng-if="supportUser.role == ROLE_SUPPORT" ui-sref="accounts({user_id:supportUserId})" href="" class="logo"><img ng-src="{{ST_HOST}}/images/upload/logo-antsadx.png"/></a>
+            <a ng-if="supportUser.role == ROLE_BUYER" ui-sref="admin({user_id:supportUserId})" href="" class="logo"><img ng-src="{{ST_HOST}}/images/upload/logo-antsadx.png"/></a>
+            <nav class="main-nav">
+                <ul>
+                    <li ui-sref-active="active"><a ui-sref="admin({user_id:supportUserId})" title="Home">Home</a>
+                    </li>
+                    <li ui-sref-active="active"><a ui-sref="operations({user_id:supportUserId})">Operations</a>
+                    </li>
+
+                </ul>
+            </nav>
+            <div class="acc-status" ng-show="isAuthenticated">
+                <div class="dropdown">
+                    <div uib-dropdown is-open="isOpenUserTree" class="acc-text" auto-close="outsideClick">
+                    <span class="wrap-text" ng-click="showSupportUser($event)">
+                        <strong title="{{supportUser.full_name}}" alt="{{supportUser.full_name}}">{{ supportUser.full_name | limitTo:40}}</strong>
+                        <span class="code">
+                            <span ng-if="supportUser != undefined && supportUser.role == ROLE_SUPPORT">{{'Support' | translate}}</span>
+                            <span ng-if="supportUser != undefined && supportUser.role == ROLE_BUYER">{{'Buyer' | translate}}</span>
+                            • {{ formatUserId(supportUser.user_id)}}
+                        </span>
+                    </span>
+                        <!--<span class="caret" uib-dropdown-toggle ng-show="currentUser && currentUser.role == ROLE_SUPPORT"></span>
+                        <div class="loading" ng-hide="arrSupportUser.length">
+                            <div class='loading-icon'></div>
+                        </div>
+                        <div ng-show="currentUser && currentUser.role == ROLE_SUPPORT" class="dropdown-menu account-tree-wrapper" uib-dropdown-menu>
+                            <div class="search-account">
+                                <form>
+                                    <input type="text" ng-change="searchAccount(search)" ng-model="search" placeholder="Search all accounts">
+                                    <button type="button"><i class="icon-search"></i></button>
+                                </form>
+                                <div class="search-account-wrapper">
+                                    <div class="loading">
+                                        <div class='loading-icon'></div>
+                                    </div>
+                                    <p ng-show="searchAccountError" class="search-account-error" style="padding: 10px 0">No accounts found</p>
+                                    <div ng-show="!searchAccountError" class="list-search-user">
+                                        <ul>
+                                            <li ng-repeat="user in arrSearch" ng-click='changeUser(user)'>
+                                                {{user.full_name}}
+                                                <span>{{formatUserId(user.user_id)}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="account-contents">
+                                <div class="recent-user" ng-click='arrRecentUser'>
+                                    <div class="recent-title">Recent</div>
+                                    <ul>
+                                        <li ng-repeat="user in arrRecentUser" ng-click='changeUser(user)'>
+                                            {{user.full_name}}
+                                            <span>{{formatUserId(user.user_id)}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="all-account">
+                                    <div class="recent-title">All accounts</div>
+                                    <div class="list-account">
+                                        <collection collection='arrSupportUser'></collection>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="btn-wrap split-v">
+                    <button type="button" class="btn"><i class="icon-setting"></i></button>
+                    <button type="button" class="btn">
+                        <div class="count">12</div>
+                        <i class="icon-bell"></i>
+                    </button>
+                </div>
+                <div class="avatar" uib-dropdown>
+                    <img uib-dropdown-toggle ng-src="{{ST_HOST}}/images/upload/img-avatar.jpg" alt="{{'Account setting' | translate}}" title="{{'Account setting' | translate}}"/>
+                    <div class="dropdown-menu" uib-dropdown-menu style="min-width: 200px;">
+                        <ul>
+                            <li>
+                                <a href="" ng-click="logOut()" title="{{'Logout' | translate}}" alt="{{'Logout' | translate}}">{{'Logout' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <adx-system-status></adx-system-status>
+    <script type="text/ng-template" id="system-status.html">
+        <div class="warning-alert" ng-if="isAuthenticated==true" ng-class="{'auto-left':toggleNavbar, 'auto-left-report':noLeftNav}">
+            <h4 ng-if="status==ACCOUNT_STATUS.SUSPENDED">
+                <span class="ic-warning"><i class="ic-ants ic-ants-64"></i><i class="ic-ants ic-ants-65"></i></span>
+                Your account is suspended - We haven't received payment for your advertising costs, so we've temporarily suspended your ADX
+            </h4>
+        </div>
+    </script>
+</div>
+

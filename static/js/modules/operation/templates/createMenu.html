@@ -1,0 +1,89 @@
+<div ng-class="{'split-v':isBuyer}" uib-dropdown auto-close="{{autoClose}}" is-open="isOpen" on-toggle="selectLineItem=null; objectId ? checkToggle() : onToggle(open)">
+    <button ng-disabled="cssClass=='lineitem-detail-creative-type' && arrLineCampaign.length==0" type="button" class="btn btn-green" uib-dropdown-toggle>
+        <i class="icon-plus-white mr-10"></i>{{ name | uppercase}}<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu ng-if="cssClass=='line-item-type'">
+        <li ng-repeat="link in arrMenu">
+            <a href="javascript:;" ng-click="createAction(link.id)"><i class="{{cssClass + link.value}}"></i>{{link.name}}</a>
+        </li>
+    </ul>
+    <div class="dropdown-menu dropdown-lineitem" uib-dropdown-menu ng-if="cssClass=='campaign-type'">
+        <div class="input-group">
+            <input type="text" name="line-item-name" ng-model="$parent.lineItemname" placeholder="{{'Search Line Item' | translate}}" class="form-control">
+            <div class="loading load-more-search" ng-class="{'load-show': loadMore}"><div class="loading-icon"></div></div>
+                <span class="input-group-btn">
+                    <button class="btn btn-default"><i class="icon-search"></i></button>
+                </span>
+        </div>
+        <div class="list-lineitem " >
+            <ul class="list-collapse scrollbar-dynamic" data-jquery-scrollbar="{}">
+                <li ng-repeat="lineitem in arrLineItem.rows">
+                    <a href="" ng-click="$parent.offsetCampaign=0;$parent.onSelectLineItem(lineitem)"><i class="icon-record-green"></i>{{lineitem.lineitem_name}}</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="dropdown-menu dropdown-choose-targeting" ng-if="cssClass=='creative-type'">
+        <div class="left-block">
+            <div class="inner">
+                <div class="border">
+                    <div class="form-search">
+                        <input type="text" name="line-item-name" ng-model="$parent.lineItemname" placeholder="{{'Search Campaign' | translate}}" class="form-control">
+                        <div class="loading load-more-search" ng-class="{'load-show': loadMore}"><div class="loading-icon"></div></div>
+                        <button type="button"><i class="icon-search-blue"></i></button>
+                    </div>
+                    <div class="inner-left">
+                        <div class="wrap-table">
+                            <div class="header">
+                                <span ng-if="lineItemname">Line Items search results</span>
+                                <span ng-if="!lineItemname">Line Items</span>
+                                : <strong>{{$parent.arrLineItem.total}}</strong>
+                            </div>
+                            <div class="body">
+                                <div class="scrollbar-dynamic" data-jquery-scrollbar="jScrollLineItemOptions">
+                                    <ul class="list-collapse">
+                                        <li ng-repeat="lineitem in $parent.arrLineItem.rows">
+                                            <a href="" ng-click="$parent.offsetCampaign=0;$parent.getCampaign(lineitem)" ng-class="{'active': selectedLineItemId==lineitem.lineitem_id}">
+                                                <i class="icon-record-green"></i>{{lineitem.lineitem_name}}
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inner-right">
+                        <div class="wrap-table-right">
+                            <div class="header" ng-show="lineItemname||selectedLineItemId">
+                                <span ng-if="!selectedLineItemId">Campaigns search results</span>
+                                <span ng-if="selectedLineItemId">Campaigns</span>
+                                : <strong>{{totalCampaign}}</strong>
+                            </div>
+                            <div class="body">
+                                <div class="scrollbar-dynamic list-campaign auto-height" data-jquery-scrollbar="jScrollCampaignOptions" ng-class="{'auto-height':!lineItemname||!selectedLineItemId}">
+                                    <ul class="list-collapse" ng-show="lineItemname||selectedLineItemId">
+                                        <li ng-repeat="camp in $parent.arrLineCampaign">
+                                            <a href="" ng-click="$parent.onSelectCampaign(camp.campaign_id)">
+                                                <i class="parent-name" ng-if="!selectedLineItemId">{{camp.lineitem_name}}</i>
+                                                <span>{{camp.campaign_name}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="loading load-more-detail" ng-class="{'load-show': loadDetail}"><div class="loading-icon"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"><a href="" ng-click="closeDropdown()" class="btn btn-grey">Cancel</a></div>
+    </div>
+    <ul class="dropdown-menu nice-scroll" style="max-height: 200px" when-scroll-ends="loadMoreCampaign()" uib-dropdown-menu ng-if="cssClass=='lineitem-detail-creative-type'">
+        <li ng-repeat="camp in arrLineCampaign">
+            <a href="" ng-click="$parent.onSelectCampaign(camp.campaign_id)">{{camp.campaign_name}}</a>
+        </li>
+    </ul>
+</div>

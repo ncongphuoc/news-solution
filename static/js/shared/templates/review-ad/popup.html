@@ -1,0 +1,30 @@
+<div class="modal" id="review_{{idmodallreview}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog popup-actual-size {{style_scale}}">
+        <div class="modal-content" >
+            <div class="modal-content ng-scope">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="options.close()">×</button>
+                </div>
+                <div class="modal-body" style="height: {{heightcreative}}px; width: {{widthcreative}}px; border: 0 none;">
+                <!--<iframe ng-if="showReview" ng-src="{{urlReview}}" style="height: {{heightcreative}}px; width: {{widthcreative}}px; border: none;" ></iframe>-->
+
+                    <img ng-if="showReview" ng-src="{{static_url}}/images/upload/no-image-ants.jpg" class="img-placeholder" data-iframe="{{urlReview}}"
+                         data-style="height: {{heightcreative}}px; width: {{widthcreative}}px; border: none;"
+                         />
+
+                    <img ng-if="showImage" ng-src="{{urlImage}}" alt=""/>
+                </div>
+                <div class="modal-footer">
+                    <p>
+                        <span ng-show="show_name">{{creativename}}</span>
+                        <span ng-show="show_width_height">{{widthcreative}}x{{heightcreative}}</span>
+                        <span ng-show="show_adaptive_size">Adaptive Size</span>
+                    </p>
+                    <!-- ngIf: options.actionText.length -->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+
+        </div>
+    </div>
+</div>

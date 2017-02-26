@@ -1,0 +1,105 @@
+<script type="text/ng-template" id="label-delete.html">
+    <div class="modal-dialog popup-brand popup-brand-8">
+        <div class="modal-content">
+            <div class="modal-header"> <a href="" ng-click="options.close();"><i class="icon-close">X</i></a>
+                <h4 class="modal-title"><i class="icon-warning-yellow"></i>Delete {{label_delete_count}} Label</h4>
+
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to remove selected label?</p>
+            </div>
+            <div class="modal-footer">
+                <hr class="mt-0">
+                <button type="button" class="btn btn-green" ng-click="options.ok();">Remove</button>
+                <button type="button" class="btn btn-grey" ng-click="options.close();">Cancel</button>
+            </div>
+        </div>
+    </div>
+</script>
+<style>
+    .total_bottom_grid{
+        display:none !important;    
+    }
+</style>
+<operations>
+    <div class="loading_page">
+        <div class="loading-icon"></div>
+        <div class="txt-loading">Loading ...</div>
+    </div>
+    <div class="heading-page">
+        <adx-campaign-breadcumb></adx-campaign-breadcumb>
+    </div>
+    <div class="inner-content">
+        <div class="page-label" style="display:{{displayLabelAdd}}">
+            <div class="add-label">
+                <p class="text-lead">Add Label</p>
+                <div class="form-group">
+                    <label class="label-field"><span class="other_color">*</span>Label Name</label>
+                    <div class="container-field">
+                        <input type="text" ng-model="label.label_name" placeholder="" class="form-control">
+                        <span ng-show="labelExist" style="color:red" id="span-label-error">{{errorMessage}}</span>
+                        <div class="dropdown dropdown-color" id="dropdown_colors">
+                            <div data-toggle="dropdown" class="acc-text">
+                                <a ng-click="expandPickerColor()" href="" class="control-color"style="background-color: {{nonInput.color}}!important;">color</a></div>
+                            <ul class="dropdown-menu" id="dropdown-color-picker">
+                                <li ng-repeat="color in arr_color">
+                                    <a ng-class="{'color-btn selected': color.is_selected}" href="">
+                                        <option ng-click="setColor(color.color);" value="1"
+                                                data-color="{{color.color}}" style="background-color:{{color.color}};">
+                                        </option>
+                                    </a>
+                                </li>
+                                <li class="custom-color">
+                                    <div class="color">
+                                        <div class="wrap-btn-create">
+                                            <!--<button type="button" data-toggle="collapse" ng-click="addColorLable()" class="btn">Add</button><button ng-click="isOpen = false" type="button" class="btn btn-default">Cancel</button>-->
+                                            <a colorpicker  colorpicker-position="top" ng-model="nonInput.color" class="more-color">More color...</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-field">Description</label>
+                    <div class="container-field">
+                        <input name="label_description" ng-model="label.label_description" type="text" placeholder="" class="form-control">
+                    </div>
+                </div>
+                <hr>
+                <div class="wrap-btn-create">
+                    <button type="button" ng-click="createNewLabel()" class="btn">Save</button><button ng-click="visibleFilter()" type="button" class="btn btn-default">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="wrap-table">
+            <div class="filter-bar filter-bar-head" ng-show="!is_create">
+                <div class="split-v">
+                    <button ng-click="createLabel();" type="button" class="btn btn-green"><i class="icon-plus-white mr-10"></i>LABEL<span class="caret"></span></button>
+                </div>
+                <div class="remove">
+                    <button disabled id="management_label_remove_button" ng-click="removeLabel()" type="button" class="btn btn-grey">Remove</button>
+                </div>
+            </div>
+            <div class="loading_grid">
+                <div class="loading-icon"></div>
+                <div class="txt-loading">Loading ...</div>
+            </div>
+            <label-grid source="selectedObject" type="" option="grid_options"></label-grid>
+            <grid params="grid_params" grid-options="grid_options" call="true" ng-model-object="selectedObject"></grid>
+
+        </div>
+        <footer class="footer">
+            <p>Reporting is not real-time. Clicks and impressions received in the last three hours may not be included here.</p>
+            <p>There is an 18+ hour delay <a href="" title="">for some metrics</a>. Time zone for all dates and times: (GMT+07:00) Hanoi. <a href="" title="">Learn more</a></p>
+            <p>Some inventory may be provided through third party intermediaries.</p>
+            <ul>
+                <li>&copy; 2016 Ants&nbsp;|&nbsp;</li>
+                <li><a href="" title="">Editorial Guidelines</a>&nbsp;|&nbsp;</li>
+                <li><a href="" title="">Privacy Policy</a></li>
+            </ul>
+        </footer>
+    </div>
+    </operations>

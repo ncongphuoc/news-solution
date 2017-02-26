@@ -1,0 +1,33 @@
+<ul class="tabs-block" ng-show="isBuyer">
+    <li ng-if="viewBy==0">
+        <a ui-sref="campaigns.lineitem" title="Line Items">Line Items</a>
+    </li>
+    <li ng-if="viewBy==0">
+        <a ui-sref="campaigns.campaign" title="Campaign">Campaigns</a>
+    </li>
+    <li ng-if="viewBy==0">
+        <a ui-sref="campaigns.setting" title="Settings">Settings</a>
+    </li>
+    <li ng-if="viewBy==5">
+        <a ui-sref="campaigns.lineitem.detail.campaign({lineitem_id: lineitemId})" title="Campaign">Campaigns</a>
+    </li>
+    <li ng-if="viewBy==5">
+        <a ui-sref="campaigns.lineitem.detail.setting({lineitem_id: lineitemId})" title="Settings">Settings</a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="campaigns.creative.edit({view_by:viewBy, creative_id:creativeId})">Creatives</a>
+    </li>
+    <li ng-if="viewBy==0">
+        <!-- all -->
+        <a ui-sref="campaigns.target" title="Targets">Targets</a>
+    </li>
+    <li ng-if="viewBy==5">
+        <!-- line item -->
+        <a ui-sref="campaigns.lineitem.detail.target({lineitem_id:lineitemId})" title="Targets">Targets</a>
+    </li>
+    <li ng-if="viewBy==10">
+        <!-- Campaign -->
+        <a ui-sref="campaigns.campaign.detail.target({campaign_id:campaignId})" title="Targets">Targets</a>
+    </li>
+
+</ul>

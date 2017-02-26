@@ -1,0 +1,9 @@
+{
+  "Username": "Tên đăng nhập",
+  "Password": "Mật khẩu",
+  "Enter username": "Nhập email",
+  "Enter password": "Nhập mật khẩu",
+  "The password you entered is incorrect.": "Tên đăng nhập hoặc mật khẩu không đúng.",
+  "Login": "Đăng nhập",
+  "Text_No_Label_Found":"Không tìm thấy label nào cho account này"
+}

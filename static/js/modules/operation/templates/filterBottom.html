@@ -1,0 +1,186 @@
+<div class="filter-bar filter-bar-head init-minwidth">
+    <adx-campaign-creator ng-if="showCreateMenu"></adx-campaign-creator>
+
+    <adx-grid-edit-action></adx-grid-edit-action>
+
+    <div class="dropdown" uib-dropdown ng-if="false">
+        <button type="button" uib-dropdown-toggle class="btn btn-default">Details<span class="caret"></span></button>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="item in dataSource.auction">
+                <div class="title-check" ng-if="item.group_name">{{item.group_name}}</div>
+                <a href="" class="item-check" ng-click="changeAuction(item.key)">{{item.value}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="dropdown" uib-dropdown ng-if="false">
+        <button type="button" uib-dropdown-toggle class="btn btn-default">Bid strategy<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="item in dataSource.strategy">
+                <a href="" ng-click="changeStrategy(item.key)">{{item.value}}</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="dropdown" uib-dropdown ng-if="false">
+        <button type="button" uib-dropdown-toggle class="btn btn-default">Automate<span class="caret"></span></button>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="item in dataSource.rule.group1">
+                <div class="title-check" ng-if="item.group_name">{{item.group_name}}</div>
+                <a href="" class="item-check" ng-click="changeRule(item.key)">{{item.value}}</a>
+            </li>
+
+            <li class="divider"></li>
+            <li class="dropdown-submenu" ng-repeat="item in dataSource.rule.group2">
+                <a href="" class="item-check">{{item.value}}</a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="subItem in item.child">
+                        <a href="" class="item-check" ng-click="changeRule(subItem.key)">{{subItem.value}}</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li ng-repeat="item in dataSource.rule.group3">
+                <a href="" class="item-check" ng-click="changeRule(item.key)">{{item.value}}</a>
+            </li>
+        </ul>
+    </div>
+    <dropdown-label ng-show="show_label_dropdown" typeitem="typeitem"></dropdown-label>
+    <!--<button type="button" class="btn btn-default pull-right"><i class="icon-cloud-down"></i></button>-->
+
+
+    <dropdown-column typeitem="typeitem" idmodalcolumn="idmodalcolumn" class="pull-right"></dropdown-column>
+
+    <script type="text/ng-template" id="adx-campaign-creator.html">
+        <div  class="split-v" uib-dropdown auto-close="{{autoClose}}" is-open="isOpen" on-toggle="objectId ? checkToggle() : onToggle(open)">
+            <button ng-disabled="cssClass=='lineitem-detail-creative-type' && arrLineCampaign.length==0" type="button" class="btn btn-green" uib-dropdown-toggle>
+                <i class="icon-plus-white mr-10"></i>{{ name | uppercase}}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu ng-if="cssClass=='line-item-type'">
+                <li ng-repeat="link in arrMenu">
+                    <a href="javascript:;" ng-click="createAction(link.id)"><i class="{{cssClass + link.value}}"></i>{{link.name}}</a>
+                </li>
+            </ul>
+            <div class="dropdown-menu dropdown-lineitem" uib-dropdown-menu ng-if="cssClass=='campaign-type'">
+                <div class="input-group">
+                    <input type="text" name="line-item-name" ng-model="selectLineItem"
+                           placeholder="{{'Line Item name' | translate}}"
+                           uib-typeahead="lineItem for lineItem in getLineItem($viewValue)"
+                           typeahead-loading="loadingLocations"
+                           class="form-control"
+                           typeahead-min-length="0"
+                           typeahead-template-url="lineItem.html" typeahead-popup-template-url="lineItemPopup.html"
+                           typeahead-loading="loadingRecords"
+                           typeahead-on-select="onSelect($item, $model, $label, $event)">
+                    <span class="input-group-btn"><button class="btn btn-default"><i class="icon-search"></i>
+                    </button></span>
+                </div>
+            </div>
+            <div class="dropdown-menu dropdown-all-account filter-lineitem-campaign" ng-if="cssClass=='creative-type'">
+                <div class="left-block">
+                    <div class="inner">
+                        <div class="border">
+                            <div class="inner-left">
+                                <div class="wrap-table">
+                                    <div class="form-search">
+                                        <input type="text" name="line-item-name" ng-model="$parent.lineItemname" placeholder="{{'Search Campaign' | translate}}" class="form-control">
+                                        {{searchLineItem}}
+                                        <button type="button"><i class="icon-search-blue"></i></button>
+                                    </div>
+                                    <div class="nice-scroll-account">
+                                        <ul class="list-collapse">
+                                            <li class="clearfix no-activity" ng-repeat="lineitem in $parent.arrLineItem">
+                                                <div class="target-parent">
+                                                    <a href="" ng-click="$parent.getCampaign(lineitem.lineitem_id)" data-toggle="collapse">{{lineitem.lineitem_name}}</a>
+                                                </div>
+                                                <div class="li-border"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inner-right">
+                                <div class="wrap-table-right">
+                                    <div class="nice-scroll-account">
+                                        <div class="inner-row"  ng-repeat="camp in $parent.arrLineCampaign">
+                                            <a href="" ng-click="$parent.onSelectCampaign(camp.campaign_id)"><span>{{camp.campaign_name}}</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"><a href="" ng-click="closeDropdown()" class="btn btn-grey">Cancel</a></div>
+            </div>
+            <ul class="dropdown-menu" uib-dropdown-menu ng-if="cssClass=='lineitem-detail-creative-type'">
+                <li ng-repeat="camp in arrLineCampaign">
+                    <a href="javascript:;" ng-click="$parent.onSelectCampaign(camp.campaign_id)">{{camp.campaign_name}}</a>
+                </li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/ng-template" id="adx-choose-buyer.html">
+        <div class="modal-dialog popup-brand popup-brand-3">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="" ng-click="options.close()"><i class="icon-close">X</i></a>
+                    <h4 class="modal-title">Select an account</h4>
+
+                </div>
+                <div class="modal-body">
+                    <p>Select an account for your new Line Item</p>
+                    <div class="form-search">
+                        <form>
+                            <input type="text" ng-change="searchAccount(search)" ng-model="search" placeholder="Search all buyer">
+                            <button type="button"><i class="icon-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="nice-scroll nice-scroll-account all-account" style="position: relative">
+                        <div class="loading" style="display: {{showLoading ? 'block' : 'none'}}">
+                            <div class="loading-icon"></div>
+                        </div>
+                        <p ng-show="searchAccountError" class="search-account-error" style="padding: 10px 0">No accounts found</p>
+                        <div ng-show="!searchAccountError" class="list-account">
+                            <collection ng-if="!search" collection='arrSupportUser' buyer-only="true"
+                                        on-select-user="onSelectUser()"></collection>
+                            <div ng-if="search" class="list-search-user">
+                                <ul>
+                                    <li ng-repeat="user in arrSearch" ng-click='changeUser(user)'>
+                                        <a href="">{{user.full_name}}</a>
+                                        <span>{{formatUserId(user.user_id)}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-green" ng-click="options.ok('ok')">Change support account</button> -->
+                    <button type="button" class="btn btn-grey" ng-click="options.close()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="lineItem.html">
+        <a href="">{{ match.label.lineitem_name}}</a>
+
+    </script>
+    <script type="text/ng-template" id="lineItemPopup.html">
+
+        <div class="list-lineitem">
+            <ul class="sub" ng-show="isOpen() && !moveInProgress"
+                ng-style="{top: position().top+'px', left: position().left+'px'}" role="listbox"
+                aria-hidden="{{!isOpen()}}">
+                <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
+                    ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option"
+                    id="{{::match.id}}">
+                    <div uib-typeahead-match index="$index" match="match" query="query"
+                         template-url="templateUrl"></div>
+                </li>
+            </ul>
+        </div>
+    </script>
+</div>

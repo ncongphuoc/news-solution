@@ -1,0 +1,265 @@
+{
+    "creative":{
+        "id": "default",
+        "width": "",
+        "height": "",
+        "brand": {
+            "type": "text",
+            "id": "textBrand",
+            "value": "MICHAEL KORS",
+            "font": {
+                "name": "Arial",
+                "size": "11",
+                "weight": "normal"
+            },
+            "color": "#fff",
+            "background": "#1C1300"
+        },
+        "products": {
+            "product1": {
+                "textDesc1": {
+                    "type": "text",
+                    "id": "textDesc1",
+                    "value":"This is ad desc",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "normal"
+                    },
+                    "color": "#1C1300"
+                },
+                "textPrice1": {
+                    "type": "text",
+                    "id": "textPrice1",
+                    "value":"$328",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "textAction1": {
+                    "type": "text",
+                    "id": "textAction1",
+                    "value": "SHOP NOW",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "image1": {
+                    "type": "image",
+                    "id": "image1",
+                    "title": "Image",
+                    "url": "public/img/product-1.jpg"
+                },
+                "textInfo1":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":""
+                },
+                "textDiscountPrice1":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":"1200000"
+                },
+                "clickTag1": "http://adx.vn",
+                "status1": "true"
+            },
+            "product2": {
+                "textDesc2": {
+                    "type": "text",
+                    "id": "textDesc2",
+                    "value":"Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "normal"
+                    },
+                    "color": "#1C1300"
+                },
+                "textPrice2": {
+                    "type": "text",
+                    "id": "textPrice2",
+                    "value": "$328",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "textAction2": {
+                    "type": "text",
+                    "id": "textAction2",
+                    "value": "SHOP NOW",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "image2": {
+                    "type": "image",
+                    "id": "image2",
+                    "title": "Image",
+                    "url": "public/img/product-2.jpg"
+                },
+                "textInfo2":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":""
+                },
+                "textDiscountPrice2":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":"1200000"
+                },
+                "clickTag2": "http://adx.vn",
+                "status2": "true"
+            },
+            "product3": {
+                "textDesc3": {
+                    "type": "text",
+                    "id": "textDesc3",
+                    "value":"Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "normal"
+                    },
+                    "color": "#1C1300"
+                },
+                "textPrice3": {
+                    "type": "text",
+                    "id": "textPrice3",
+                    "value": "$328",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "textAction3": {
+                    "type": "text",
+                    "id": "textAction3",
+                    "value": "SHOP NOW",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "image3": {
+                    "type": "image",
+                    "id": "image3",
+                    "title": "Image",
+                    "url": "public/img/product-3.jpg"
+                },
+                "textInfo3":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":""
+                },
+                "textDiscountPrice3":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":"1200000"
+                },
+                "clickTag3": "http://adx.vn",
+                "status3": "true"
+            },
+            "product4": {
+                "textDesc4": {
+                    "type": "text",
+                    "id": "textDesc4",
+                    "value": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "normal"
+                    },
+                    "color": "#1C1300"
+                },
+                "textPrice4": {
+                    "type": "text",
+                    "id": "textPrice4",
+                    "value": "$428",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "textAction4": {
+                    "type": "text",
+                    "id": "textAction4",
+                    "value": "SHOP NOW",
+                    "font": {
+                        "name": "Arial",
+                        "size": "11",
+                        "weight": "bold"
+                    },
+                    "color": "#1C1300"
+                },
+                "image4": {
+                    "type": "image",
+                    "id": "image4",
+                    "title": "Image",
+                    "url": "public/img/product-4.jpg"
+                },
+                "textInfo4":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":""
+                },
+                "textDiscountPrice4":{
+                    "font":{
+                        "name":"",
+                        "size":"",
+                        "weight":""
+                    },
+                    "color":"",
+                    "value":"1200000"
+                },
+                "clickTag4": "http://adx.vn",
+                "status4": "true"
+            }
+        }
+    }
+}

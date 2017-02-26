@@ -1,0 +1,8 @@
+<div>
+    <div ng-if="maintenance" class="maintenance">
+        <img ng-src="{{ST_HOST}}/images/img-maintenance.png" width="138" height="127" alt="">
+        <h4>We’re sorry, this module is temporarily closed for maintenance.</h4>
+        <span ng-if="maintenance_info.from_date != undefined && maintenance_info.to_date != undefined">This downtime from {{maintenance_info.from_date}} - {{maintenance_info.from_date}}</span><span>(Vietnam Time Zone)</span>
+    </div>
+    <div ng-hide="maintenance"  class="clone-inner-content"></div>
+</div>

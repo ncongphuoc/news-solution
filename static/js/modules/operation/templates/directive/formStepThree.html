@@ -1,0 +1,69 @@
+<div class="heading-page">
+    <h1 class="title-2">Audience</h1>
+</div>
+<div class="inner-content">
+    <form name="package_form_step_3" novalidate>
+        <div class="create-campaign-2">
+            <p class="text-lead">Choose how to target your Creatives</p>
+            <div class="form-group">
+                <div class="radio" ng-repeat="g_target in config_group_target">
+                    <label>
+                        <input type="radio" ng-required="!isPrivateDeal" name="target_radio_choose" ng-model="$parent.target_radio_choose" class="icheck"
+                               ng-value="g_target.key"
+                               ng-change="changeTarget(g_target.key)"><span>{{g_target.value}}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="interest-block" ng-repeat-start="(index_target_selected,target_selected) in package.group_target_selected">
+                <choose-target ng-model="target_selected.ng_model"
+                               source="target_selected.config"
+                               is-load="true"
+                               id="target_selected.key"
+                               show-remove="index_target_selected == 0 ? false : true"
+                               remove="removeTarget(id)"
+                               ng-show="!target_selected.closed" ng-if="+target_selected.key != +group_target.demographics">
+                </choose-target>
+                <target-demo-graphics ng-model="target_selected.ng_model"
+                                      id="target_selected.key"
+                                      ng-show="!target_selected.closed" ng-if="+target_selected.key == +group_target.demographics"
+                                      show-remove="index_target_selected == 0 ? false : true"
+                                      remove="removeTarget(id)"></target-demo-graphics>
+
+                <div class="right-block" ng-if="index_target_selected == 0">
+                    <forecast ng-model="forecast_data"></forecast>
+                </div>
+            </div>
+            <span ng-repeat-end class="error error_2" ng-repeat="error in target_selected.errors">
+                <span ng-if="+error == 1">
+                    {{ 'Please select at least one criterion' | translate }}
+                </span>
+                <span class="error error_2" ng-if="+error == 2">
+                    {{ 'The demographics targeting method has no effect on reach as all options are being targeted. ' +
+                    'Please remove at least one criterion or choose another targeting method.' | translate }}</span>
+            </span>
+            <uib-accordion close-others="false" ng-show="package.group_target_selected.length < 4">
+                <ul class="list-collapse narrow-top">
+                    <li class="clearfix">
+                        <uib-accordion-group heading="Narrow your targeting further (optional)"
+                                             template-url="/js/modules/operation/templates/campaign/accordion.html">
+                            <div class="col-sm-4" style="margin-top: 10px;padding-left: 0">
+                                <div class="dropdown" uib-dropdown>
+                                    <button type="button" data-toggle="my-dropdown" class="btn btn-default" uib-dropdown-toggle>Select a targeting method<span class="caret"></span></button>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li ng-repeat="g_target in config_group_target" ng-hide="g_target.hidden"><a ng-click="addTarget(g_target.key)">{{g_target.value}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </uib-accordion-group>
+                    </li>
+                </ul>
+            </uib-accordion>
+            <hr>
+            <div class="clearfix">
+                <button type="button" class="btn btn-grey" ng-click="back()"><i class="icon-arr-back"></i>Back</button>
+                <button type="button" class="btn btn-grey" ng-click="submitStepThree()">Continue<i class="icon-arrow-right"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+<demographic></demographic>

@@ -1,0 +1,13 @@
+<div ng-include="template"></div>
+<script type="text/ng-template" id="template_mv.html">
+    <span class="txt-grey-light" style="white-space: nowrap;">{{data[config[0].view_id]}} <i class="icon-arr-next"></i></span>
+    <div>{{data[config[1].view_id]}}</div>
+</script>
+<script type="text/ng-template" id="template_mv_1.html">
+    <div>{{data[config[0].view_id] ? data[config[0].view_id] : 'Website' }}</div>
+    <span class="txt-grey-light" style="white-space: nowrap;">{{data[config[1].view_id]}}</span><br>
+    <span class="txt-grey-light" style="white-space: nowrap;">{{data[config[2].view_id]}}</span>
+</script>
+<script type="text/ng-template" id="template_mv_2.html">
+    <span style="white-space: nowrap;font-weight: bold;">{{data[config[0].view_id]}} {{str_extend}}{{+data[config[0].view_id] > 1 ? 's':'' }} </span>
+</script>

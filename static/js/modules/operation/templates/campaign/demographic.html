@@ -1,0 +1,51 @@
+<div class="demographic" ng-esc="closePopup()" tabindex="0">
+    <div class="demographic-panel"></div>
+    <div class="modal-dialog popup-demographic popup-brand popup-brand-2">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="" ng-click="closePopup()"><i class="icon-close">X</i></a>
+                <h4 class="modal-title modal-title-1">Business Professionals</h4>
+                <p>This represents people in locations that you’re targeting.</p>
+            </div>
+            <div class="modal-body">
+                <div class="loading" style="display: block">
+                    <div class="loading-icon"></div>
+                </div>
+                <div class="chart-business">
+                    <p><strong>Age</strong><span>(10M - 15M cookies)</span></p>
+                    <div class="chart" style="height: 177px">
+                        <div class="demographic-age-chart"></div>
+                    </div>
+                    <p><strong>Gender</strong></p>
+                    <div class="chart end">
+                        <div class="demographic-gender-chart"></div>
+                        <div class="gender-chart-legend">
+                            <table>
+                                <tr>
+                                    <td>Male</td>
+                                    <td><span class="color-male"></span></td>
+                                    <td>{{ gender.male | number:0 }}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Female</td>
+                                    <td><span class="color-female"></span></td>
+                                    <td>{{ gender.female | number:0 }}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Unknown</td>
+                                    <td><span class="color-unknown"></span></td>
+                                    <td>{{ gender.unknown | number:0 }}%</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <hr>
+                <button ng-click="closePopup()" type="button" class="btn btn-grey">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

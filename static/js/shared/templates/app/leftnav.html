@@ -1,0 +1,100 @@
+<aside class="sidebar">
+    <header>
+        <a ng-if="supportUser.role == ROLE_SUPPORT" ui-sref="accounts({user_id:supportUserId})" href="" class="logo"><img ng-src="{{ST_HOST}}/images/upload/logo-antsadx.png"/></a>
+        <a ng-if="supportUser.role == ROLE_BUYER" ui-sref="operations({user_id:supportUserId})" href="" class="logo"><img ng-src="{{ST_HOST}}/images/upload/logo-antsadx.png"/></a>
+    </header>
+    <div ng-if="supportUser.role == ROLE_SUPPORT">
+
+        <div class="search-block">
+            <button class="btn-toggle-sidebar-2" ng-click="collapseNavbar(!toggleNavbar)"><i class="icon-toggle-left-2"></i></button>
+        </div>
+
+        <ul class="left-nav">
+			<li>
+                <a title="Accounts" ui-sref-active="active" href="" ui-sref="operations">
+                    <i class="line-left"></i>
+                    <i class="icon-account"></i>
+                    <span>{{'All Line Items' | translate}}</span>
+                </a>
+            </li>
+            <li ng-hide="true">
+                <a title="Accounts" ui-sref-active="active" href="" ui-sref="accounts({user_id: supportUserId})">
+                    <i class="line-left"></i>
+                    <i class="icon-account"></i>
+                    <span>{{'Accounts' | translate}}</span>
+                </a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title=""><i class="line-left"></i><span>Alerts</span></a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title=""><i class="line-left"></i><span>Bulk operations</span></a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title=""><i class="line-left"></i><span>Conversion</span></a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title=""><i class="line-left"></i><span>Attribution</span></a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title="">
+                    <i class="line-left"></i>
+                    <i class="icon-audience"></i>
+                    <span>{{'Audiences'| translate}}</span>
+                </a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title=""><i class="line-left"></i><span>Pending Invitation</span></a>
+            </li>
+        </ul>
+    </div>
+    <div ng-if="supportUser.role == ROLE_BUYER">
+        <div class="search-block">
+            <div class="search-input">
+                <form action="#">
+                    <input type="text" placeholder="Search">
+                    <button type="submit"><i class="icon-search"></i></button>
+                </form>
+            </div>
+            <button class="btn-toggle-sidebar" ng-click="collapseNavbar(!toggleNavbar)"><i class="icon-toggle-left"></i></button>
+        </div>
+        <ul class="left-nav">
+            <li>
+                <a class="toggle-lineitem-list" ng-class="{active: getActiveMenu()}" href="" data-toggle="collapse" title="" ng-click="collapseAllLineItem($event)">
+                <i class="line-left"></i>
+                <i class="icon-campaign"></i>
+                    <span>all line items</span>
+                </a>
+                <div class="alllineitems" settings="alllineitems" uib-collapse="!showSubLeftNav"></div>
+            </li>
+            <li>
+                <a ui-sref-active="active" href="" ui-sref="campaigns.library.audience" title="Shared library" alt="Shared library">
+                    <i class="icon-share"></i>
+                    <i class="line-left"></i>
+                    <span>Shared library</span>
+                </a>
+            </li>
+            <li ng-hide="true">
+                <a href="" title="">
+                    <i class="icon-bulk"></i>
+                    <i class="line-left"></i>
+                    <span>Bulk operations</span>
+                </a>
+            </li>
+            <li>
+                <a ui-sref-active="active" href="" ui-sref="report({user_id: supportUserId})" title="">
+                    <i class="icon-report"></i>
+                    <i class="line-left"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+            <li>
+                <a ui-sref-active="active" href="" ui-sref="campaigns.label({user_id: supportUserId})" title="{{'Labels' | translate}}" alt="{{'Labels' | translate}}">
+                    <i class="icon-label"></i>
+                    <i class="line-left"></i>
+                    <span>{{'Labels' | translate}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

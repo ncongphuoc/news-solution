@@ -1,0 +1,336 @@
+<div>
+    <p ng-show="!isEditTarget&&LINE_ITEM_TYPE.PRIVATE_DEAL!=lineItemType" class="edit-row">
+        <strong class="mr-10">
+            <br>{{'All computer, mobile and tablet inventory' | translate}}
+        </strong>
+        <a href="" ng-click="isEditTarget = true">{{'Edit' | translate}}</a>
+    </p>
+    <p class="edit-row" ng-if="LINE_ITEM_TYPE.PRIVATE_DEAL==lineItemType">
+        <strong class="mr-10">
+        {{arrDisplayText.join()}}
+        </strong>
+    </p>
+
+    <div ng-show="isEditTarget">
+         <span ng-hide="true">
+                    <input type="input" ng-model="osTypeDesktopSel" name="test"
+                           ng-required="loadCriterion == true && osTypeDesktop == 'custom' && arrSelectedOsDesktop.length == 0">
+                     <input type="input" ng-model="osTypeDesktopOpt" name="test1"
+                            ng-required="loadCriterion == true && arrDisplay.pc == false && arrDisplay.mobile == false && arrDisplay.tablet == false">
+                </span>
+        <div class="checkbox checkbox-device">
+            <label>
+                <input type="checkbox" name="b" class="icheck" ng-model="arrDisplay.pc">
+                <span>{{'Computer' | translate}}</span>
+            </label>
+        </div>
+        <div class="border-device" ng-show="arrDisplay.pc">
+            <div class="device-block">
+                <p><strong class="text-dot">{{'Operating systems' | translate}}</strong></p>
+
+                <div class="radio">
+                    <label class="">
+                        <input type="radio" ng-model="osTypeDesktop" value="all" name="osDesktop" class="icheck">
+                        <span>{{'All available operating systems' | translate}}</span> </label>
+                </div>
+                <div class="radio">
+                    <label class="">
+                        <input type="radio" name="osDesktop" class="icheck" ng-model="osTypeDesktop" value="custom">
+                        <span>{{'Let me choose...'}}</span> </label>
+                </div>
+                <div class="wrap-browser" ng-show="osTypeDesktop == 'custom'">
+                    <div class="list-browser">
+                        <ul class="nice-scroll source-tree">
+                            <li ng-repeat="os in arrOsDesktop" ng-class="{checked: os.selected}">
+                                <div class="heading">
+                                    <strong>{{os.os_name}}</strong>
+                                    <a href="" ng-click="addOsAllDesktopVersion(os)" ng-if="!os.selected">{{'Add' | translate}}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list-browser">
+                        <div class="title-text">Selected operating systems</div>
+                        <ul class="nice-scroll list-single" tabindex="5006" style="overflow: hidden; outline: none; cursor: -webkit-grab;">
+                            <li ng-repeat="os in arrSelectedOsDesktop">
+                                <span>{{os.os_name}}</span>
+                                <a href="" ng-click="removeOsDesktop(os)">{{'Remove' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="radio">
+            <span class="help-block error"
+                  ng-show="showError && loadCriterion == true && osTypeDesktop == 'custom' && arrSelectedOsDesktop.length == 0">
+                {{'Please select at least one operating system.' | translate}}
+            </span>
+                </div>
+            </div>
+        </div>
+        <div class="checkbox checkbox-device">
+            <label>
+                <input type="checkbox" name="b" class="icheck" ng-model="arrDisplay.mobile">
+                <span>{{'Mobile' | translate}}</span>
+            </label>
+        </div>
+        <div class="checkbox checkbox-device">
+            <label>
+                <input type="checkbox" name="b" class="icheck" ng-model="arrDisplay.tablet">
+                <span>{{'Tablet' | translate}}</span>
+            </label>
+        </div>
+        <a ng-show="arrDisplay.tablet || arrDisplay.mobile" role="button"
+           ng-click="isCollapsedMobile = !isCollapsedMobile"
+           href="" class="advance-screen">
+            <i class="icon-btn-close-blue" ng-class="{active:isCollapsedMobile}"></i>
+            {{'Advanced mobile and tablet options' | translate}}
+        </a>
+        <div class="checkbox checkbox-device">
+        <span class="help-block error" ng-show="showError && loadCriterion == true && arrDisplay.pc == false && arrDisplay.mobile == false && arrDisplay.tablet == false">
+                {{'Please select at least one device display.' | translate}}
+            </span>
+        </div>
+
+        <div class="border-device" uib-collapse="!isCollapsedMobile" ng-show="arrDisplay.tablet || arrDisplay.mobile">
+            <div class="device-block">
+                <p><strong class="text-dot" translate="Operating systems">Operating systems</strong>
+                </p>
+        <span ng-hide="true">
+            <input type="input" ng-model="osTypeInput"
+                   ng-required="loadCriterion == true && osType == 'custom' && arrSelectedOs.length == 0">
+        </span>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="osType" value="all" name="devices" class="icheck">
+                        {{'All available operating systems' | translate}}
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="osType" value="custom" checked class="icheck">
+                        {{'Let me choose...'| translate}}
+                    </label>
+                </div>
+                <div class="wrap-devices" ng-show="osType == 'custom'">
+                    <div class="list-devices">
+                        <ul class="nice-scroll">
+                            <li ng-repeat="os in arrOs" ng-class="{checked: os.selected}">
+                                <div class="heading"><strong>{{os.os_name}}</strong>
+
+                                    <div class="clearfix">
+                                        <a href="" class="pull-left" ng-click="showVersion(os)" ng-hide="os.selected || (os.child.length == 1 && os.child[0].os_version_id == -1)">
+                                            Select versions
+                                        </a>
+                                        <a href="" class="pull-right" ng-click="addOsAllVersion(os)"
+                                           ng-if="!os.selected">{{'Add' | translate}}</a>
+                                    </div>
+                                </div>
+                                <div class="inner-devices" ng-show="os.child.length && os.show_version && !os.selected">
+                                    <div class="wrap-min-max">
+                                        <div class="clearfix">
+                                            <div class="input-group"><span class="input-group-addon">Min</span>
+                                                <select class="form-control" ng-model="os.version_min">
+                                                    <option ng-repeat="version in os.child | filter:filterOsVersion()"
+                                                            value="{{version.os_version_id}}">{{version.os_version_id}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group"><span class="input-group-addon">Max</span>
+                                                <select class="form-control" ng-model="os.version_max">
+                                                    <option ng-repeat="version in os.child | filter: filterOsVersion()"
+                                                            value="{{version.os_version_id}}">{{version.os_version_id}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix btn-group-device">
+                                            <button type="button" class="btn btn-green" ng-disabled="enableAdd(os)"
+                                                    ng-click="addOsVersion(os)">{{'Add' | translate}}
+                                            </button>
+                                            <button type="button" class="btn btn-grey" ng-click="showVersion(os)">
+                                                {{'Cancel' | translate}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list-devices selected">
+                        <p class="title-text" translate="Selected operating systems">Selected operating systems</p>
+                        <ul class="nice-scroll">
+                            <li ng-repeat="os in arrSelectedOs">
+                                <div class="heading">
+                                    <div class="clearfix">
+                                        <strong class="pull-left">{{os.os_name}}
+                                            <span class="text-grey" ng-if="os.add_all">{{'All versions' | translate}}</span>
+                                    <span class="text-grey" ng-if="!os.add_all && os.child_version">
+                                        {{os.child_version.join(', ')}}
+                                    </span>
+                                        </strong>
+                                        <a href="" class="pull-right" ng-click="removeOs(os)">{{'Remove' | translate}}</a></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="radio">
+            <span class="help-block error"
+                  ng-show="showError && loadCriterion == true && osType == 'custom' && arrSelectedOs.length == 0">
+                {{'Please select at least one operating system.' | translate}}
+            </span>
+                </div>
+            </div>
+            <div class="device-block">
+                <p><strong class="text-dot" translate="Devices model">Devices model</strong></p>
+         <span ng-hide="true">
+            <input type="input" ng-model="osTmp"
+                   ng-required="loadCriterion == true && deviceType == 'custom' && arrSelectedDevice.length == 0">
+        </span>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="devices-model" ng-model="deviceType" value="all" icheck
+                               class="icheck">{{'All available devices' | translate}}
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="devices-model" ng-model="deviceType" value="custom" icheck checked
+                               class="icheck">{{'Let me choose...' | translate}}
+                    </label>
+                </div>
+                <div class="wrap-devices-mode" ng-show="deviceType == 'custom'">
+
+                    <div class="list-devices">
+                        <ul class="source-tree nice-scroll">
+                            <li ng-class="{checked: device.selected == true}" ng-repeat="device in arrDevice">
+                                <div class="heading"><strong>{{device.device_name}}</strong><a href=""
+                                                                                               ng-click="addDevice(device)">{{'Add'
+                                    | translate}}</a></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="list-devices">
+                        <p class="title-text" translate="Selected device models">Selected device models</p>
+                        <ul class="nice-scroll list-single">
+                            <li ng-repeat="device in arrSelectedDevice">
+                                <span>{{device.device_name}}</span><a href="" ng-click="removeDevice(device)">{{'Remove'
+                                | translate}}</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="radio">
+            <span class="help-block error"
+                  ng-show="showError && loadCriterion == true && deviceType == 'custom' && arrSelectedDevice.length == 0">
+                {{'Please select at least one device model' | translate}}
+            </span>
+                </div>
+                <div class="tip-block"><i class="icon-light"></i>
+
+                    <div class="description">
+                        <p>{{"Based on your targeted devices we strongly recommend you also target the following operating systems (If you don't target those operating systems you won't serve on some devices!):" | translate}}</p>
+                        <ul>
+                            <li>iOS</li>
+                            <li>Other/Unknown</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="isEditTarget" class="device-block">
+                <p><strong class="text-dot">Carriers and Wi-Fi</strong></p>
+        <span ng-hide="true">
+            <input type="input" ng-model="osTmp" ng-required="loadCriterion == true && carrierType == 'custom' && arrSelectedCarrier.length == 0">
+        </span>
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="carrierType" value="all"  class="icheck">{{'All available carriers and Wi-Fi' | translate}}
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="carrierType" value="custom" class="icheck">{{'Let me choose...'| translate}}
+                    </label>
+                </div>
+
+
+                <div class="wrap-devices-mode" ng-show="carrierType == 'custom'">
+                    <div class="list-devices">
+                        <ul class="source-tree nice-scroll">
+                            <li ng-class="{checked: carrier.selected == true}" ng-repeat="carrier in arrCarrier[0].carrier">
+                                <div class="heading"><span>{{carrier.carrier_name}}</span>
+                                    <a href="" ng-click="addCarrier(carrier)"> {{'Add' | translate}}</a></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="list-devices">
+                        <p class="title-text">{{'Selected carrier and wifi' | translate}}</p>
+                        <ul class="nice-scroll list-single">
+                            <li ng-repeat="carrier in arrSelectedCarrier">
+                                <span>{{carrier.carrier_name}}</span>
+                                <a href="" ng-click="removeCarrier(carrier)">{{'Remove' | translate}}</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="radio">
+            <span class="help-block error" ng-show="showError && loadCriterion == true && carrierType == 'custom' && arrSelectedCarrier.length == 0">
+                {{'Please select at least one carrier or provider' | translate}}
+            </span>
+                </div>
+            </div>
+            <div class="device-block">
+                <p><strong class="text-dot" translate="Browser">Browser</strong></p>
+        <span ng-hide="true">
+            <input type="input" ng-model="osTmp"
+                   ng-required="loadCriterion == true && browserType == 'custom' && arrSelectedBrowser.length == 0">
+        </span>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="browserType" value="all" class="icheck">
+                        {{'All available browsers'| translate}}
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="browser" ng-model="browserType" value="custom" class="icheck">
+                        {{'Let me choose...' | translate}}
+                    </label>
+                </div>
+                <div class="wrap-browser" ng-show="browserType == 'custom'">
+                    <div class="list-browser">
+                        <ul class="source-tree nice-scroll">
+                            <li ng-class="{checked: browser.selected == true}" ng-repeat="browser in arrBrowser">
+                                <div class="heading"><strong>{{browser.browser_name}}</strong>
+                                    <a href="" ng-click="addBrowser(browser)">{{'Add'| translate}}</a></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="list-browser">
+                        <div class="title-text" translate="Selected browsers">Selected browsers</div>
+                        <ul class="nice-scroll list-single">
+                            <li ng-repeat="browser in arrSelectedBrowser">
+                                <span>{{browser.browser_name}}</span>
+                                <a href="" ng-click="removeBrowser(browser)">{{'Remove'| translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="radio">
+            <span class="help-block error"
+                  ng-show="showError && loadCriterion == true && browserType == 'custom' && arrSelectedBrowser.length == 0">
+                {{'Please select at least one browser' | translate}}
+            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

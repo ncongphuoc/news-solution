@@ -1,0 +1,10 @@
+<div class="title-pull-left">
+    <ul class="breadcrumb">
+        <li ng-repeat="(key, breadcumb) in arrBreadcumd" ng-if="breadcumb.name.length">
+            <a ng-click="goTo(breadcumb)" href=""
+               ui-sref="{{breadcumb.link}}({{breadcumb.param}})"
+               title="{{breadcumb.name}}" alt="{{breadcumb.name}}">{{breadcumb.name| limitTo:40}}</a>
+        </li>
+    </ul>
+    <h1 class="title pull-left title-cus" ng-show="targetName.length"><span class="text-small">{{breadcumbTitle}} </span>{{targetName}}</h1>
+</div>

@@ -1,0 +1,33 @@
+<operations>
+    <div class="heading-page">
+        <adx-campaign-breadcumb></adx-campaign-breadcumb>
+        <div class="dropdown pull-right cus-breadcrumb">
+            <!-- Calander -->
+            <adx-date-picker datepicker="datepicker()" params="datePicker" from_date="from_date" to_date="to_date"></adx-date-picker>
+        </div>
+    </div>
+    <campaignsubmenu></campaignsubmenu>
+    <div class="inner-content">
+        <div class="wrap-chart">
+            <div class="wrap-chart-left">
+                <!-- Filter top -->
+                <filtertop data="data_filter_top" filtertop="filterTop()" params="filter_top_params"></filtertop>
+                <filter filter-params="filter_params" filter-options="filter_options" action="applyFilter()"></filter>
+
+                <chart settings="chart"></chart>
+
+            </div>
+            <div class="wrap-chart-right">
+            </div>
+        </div>
+        <filterbottom idmodalcolumn="idmodal" filter="filterBottomChange()" params="filter_bottom_parrams" datasource="data_filter_bottom" typeItem="typeitem"></filterbottom>
+
+        <div class="wrap-table table-responsive scroll">
+            <div class="loading_grid">
+                <div class="loading-icon"></div>
+                <div class="txt-loading">Loading ...</div>
+            </div>
+            <grid params="grid_params" grid-options="grid_options" ng-model-object="selectedObject"></grid>
+        </div>
+    </div>
+</operations>

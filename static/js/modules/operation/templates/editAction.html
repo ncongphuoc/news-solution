@@ -1,0 +1,21 @@
+<div class="dropdown" uib-dropdown ng-hide="arrAction == undefined">
+    <button type="button" data-toggle="my-dropdown" class="btn btn-default" uib-dropdown-toggle>Edit<span
+            class="caret"></span></button>
+    <ul class="dropdown-menu" uib-dropdown-menu>
+        <li ng-repeat="item in arrAction.group1">
+            <a href=""  class="item-check" ng-click="onSelect(item.key, 1)" ng-class="item.class">{{item.value}}</a>
+        </li>
+        <li class="divider" ng-if="arrAction.group2.length"></li>
+        <li ng-repeat="item in arrAction.group2">
+            <a href="" class="item-check" ng-click="onSelect(item.key, item)">{{item.value}}</a>
+        </li>
+        <li class="divider" ng-if="arrAction.group3.length"></li>
+        <li ng-repeat="item in arrAction.group3">
+            <a href="" class="item-check" ng-click="onSelect(item.key, 3)">{{item.value}}</a>
+        </li>
+        <li class="divider" ng-if="arrAction.group4.length"></li>
+        <li ng-repeat="item in arrAction.group4">
+            <a href="" class="item-check" ng-click="onSelect(item.key, 4)">{{item.value}}</a>
+        </li>
+    </ul>
+</div>

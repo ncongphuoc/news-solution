@@ -1,0 +1,99 @@
+<form name="addFilter" ng-show="show_filter_box" ng-init="show_filter_box = false">
+    <div class="campaign-filter">
+        <div class="top-filter"><span class="sub-title" ng-class="{'cus_top':show_content_filter}" ng-click="show_content_filter = !show_content_filter">Filter </span><span class="" ng-class="{'color-1':title_filter_box != ''}"> {{title_filter_box}}</span>
+            <a href ng-click="hideBoxFilter()" class="btn-close"></a>
+        </div>
+        <div class="content-filter" ng-show="show_content_filter" ng-init="show_content_filter=true">
+            <div class="wrap-row" ng-repeat="(index_list_filter,group) in list_filter">
+                <div class="inner-row">
+                    <div class="inner-col">
+                        <div class="dropdown dropdown-1" uib-dropdown>
+                            <button type="button" data-toggle="my-dropdown" class="btn btn-default" uib-dropdown-toggle>
+                                {{group.metric_name}}<span class="caret"></span></button>
+                            <ul class="dropdown-menu" uib-dropdown-menu>
+                                <li ng-repeat-start="item in dataSource.filter | orderBy:'1*level_position'" ng-class="{'dropdown-submenu':item.child}" stt="{{item.level_position}}">
+                                    <a href ng-click="!item.child ? changeFilter(index_list_filter,item):''" title="{{item.value}}">{{item.value}}</a>
+                                    <ul class="dropdown-menu" ng-if="item.child">
+                                        <!--ng-if="item.child.length"-->
+                                        <li ng-repeat="subItem in item.child">
+                                            <a href ng-click="changeFilter(index_list_filter,subItem)">{{subItem.value}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="divider" ng-repeat-end></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="inner-col">
+                        <div class="dropdown dropdown-2" uib-dropdown ng-if="group.operator.length > 1">
+                            <button type="button" data-toggle="my-dropdown" class="btn btn-default" uib-dropdown-toggle>
+                                {{group.operator_name}}<span class="caret"></span></button>
+                            <ul class="dropdown-menu" uib-dropdown-menu>
+                                <li ng-repeat-start="operator in group.operator">
+                                    <a href ng-click="changeOperator(index_list_filter,operator)" title="Create filter">{{operator.name}}</a>
+                                </li>
+                                <li class="divider" ng-repeat-end></li>
+
+                            </ul>
+                        </div>
+                        <div><span ng-if="group.operator.length == 1">{{group.operator[0].name}}</span></div>
+                    </div>
+                    <div class="inner-col">
+                        <ng-form name="validateInputForm">
+                            <span ng-switch on="group.data_type">
+                                <span ng-switch-when="5">
+                                    <input type="text" ng-model="group.filter_value" jqdatepicker allow-max-date="1">
+                                </span>
+                            <span ng-switch-default>
+                                    <span ng-if="metric_select_multi.indexOf(group.metric_code) !== -1">
+                                        <select-multi config="group.config_select" ng-model="group.filter_value" option="data_audience"></select-multi>
+                                    </span>
+                            <span ng-if="metric_select_multi.indexOf(group.metric_code) == -1">
+                                        <input ng-if="group.data_type != 1" name="groupFilter" ng-model="group.filter_value" ng-max="100"
+                                               required type="text" ng-change="valueChange()"
+                                               ng-class="{input_validate:!validateInputForm.$valid}"
+                                               adx-format-number>
+                                        <input ng-if="group.data_type == 1" name="groupFilter" ng-model="group.filter_value" ng-max="100"
+                                           required type="text" ng-change="valueChange()"
+                                           ng-class="{input_validate:!validateInputForm.$valid}">
+
+
+                            </span>
+                            </span>
+                            </span>
+                            <span ng-switch on="group.data_type">
+                                <span ng-switch-when="3">%</span>
+                            <span ng-switch-when="4">₫</span>
+                            </span>
+
+
+
+                            <!--<p ng-show="validateInputForm.groupFilter.$error.required" class="help-block">Required</p>-->
+                        </ng-form>
+                    </div>
+                    <a href ng-click="removeRowFilter(index_list_filter)" class="btn-close"></a>
+                </div>
+                <div class="error_filter">
+                    <span class="error" style="margin: 0">{{group.error}}</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;min-width: 680px;position: relative;"><a href="javascript:void(0)" ng-click="addFilterOperator()" class="link-add-more">Add
+                another</a></div>
+            <div class="inner-row bot-filter"><a href="javascript:void(0)" ng-click="addFilter.$valid && applyFilter()" class="btn {{btn_color}}" ng-init="btn_color='btn-grey'" ng-class="btn_color = addFilter.$valid ?'btn-green':'btn-grey'" ng-disabled="!addFilter.$valid">Apply</a>
+                <a href="javascript:void(0)" ng-click="hideBoxFilter()" class="btn btn-grey">Clear</a>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" class="icheck" ng-model="filter_params.save_filter"
+                               ng-disabled="filter_params.disable_save_filter"><span>{{str_save_filter}}</span>
+                    </label>
+                </div>
+                <ng-form name="validateInputForm">
+                    <input type="text" placeholder="Enter filter name" ng-model="filter_params.filter_name" ng-required="filter_params.save_filter" ng-class="{input_validate:filter_params.save_filter && !validateInputForm.$valid}" ng-hide="filter_params.disable_save_filter || !filter_params.save_filter ">
+                </ng-form>
+
+            </div>
+        </div>
+    </div>
+</form>

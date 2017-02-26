@@ -1,0 +1,135 @@
+<div class="heading-page">
+    <h1 class="title-2">Package Information</h1>
+</div>
+<div class="inner-content">
+    <form name="package_form_step_1" novalidate>
+        <div class="create-campaign-2">
+            <div class="form-package">
+                <div class="form-group">
+                    <label>Package Name</label>
+                    <div class="container-field">
+                        <input type="text" class="form-control" style="width:276px"
+                        ng-minlength="10"
+                        ng-maxlength="255"
+                        required
+                        ng-model="package.package_name"
+                        ng-change="checkExistPackageName()"
+                        name="package_name"
+                        ng-class="{'border-error':!package_form_step_1.package_name.$valid && is_error || is_exist_package_name}">
+                        <ng-messages for="package_form_step_1.package_name.$error" role="alert" ng-if="is_error">
+                            <span class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid package name' | translate}}</span>
+                            <span class="error" ng-message="minlength"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Package name is too low' | translate}}</span>
+                            <span class="error" ng-message="maxlength"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Package name is too large' | translate}}</span>
+                        </ng-messages>
+                        <span class="error" ng-if="is_exist_package_name"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Package name already exist' | translate}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Sale Price</label>
+                    <div class="container-field">
+                        <div class="inline-group">
+                            <input type="text" placeholder="0" class="form-control inline text-right" style="width:126px"
+                            required
+                            ng-model="package.sale_price"
+                            name="sale_price"
+                            adx-format-number>
+                            <div class="form-control-static">đ</div>
+                            <ng-messages for="package_form_step_1.sale_price.$error" role="alert" ng-if="is_error">
+                                <span class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid Sale price' | translate}}</span>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Buy price</label>
+                    <div class="container-field">
+                        <div class="inline-group">
+                            <input type="text" placeholder="0" class="form-control inline text-right" style="width:126px"
+                            required
+                            ng-model="package.buy_price"
+                            name="buy_price"
+                            adx-format-number>
+                            <div class="form-control-static">đ</div>
+                            <ng-messages for="package_form_step_1.buy_price.$error" role="alert" ng-if="is_error">
+                                <span class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid Buy price' | translate}}</span>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Discount</label>
+                    <div class="container-field">
+                        <div class="inline-group">
+                            <input type="text" placeholder="0" class="form-control inline text-right" style="width:126px"
+                            required
+                            ng-model="package.discount"
+                            name="discount"
+                            adx-format-number adx-validate max="100" min="0">
+                            <div class="form-control-static">đ</div>
+                            <ng-messages for="package_form_step_1.discount.$error" role="alert" ng-if="is_error">
+                                <span class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid discount' | translate}}</span>
+                                <span class="error" style="width: 260px" ng-message="max"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Maximum of discount number is 100' | translate}}</span>
+                                <span class="error" style="width: 260px" ng-message="min"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Minimun of discount number is 0' | translate}}</span>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Bid strategy</label>
+                    <div class="container-field">
+                        <div class="dropdown">
+                            <adx-dropdown
+                            ng-model="package.bid_strategy" css-class-button="form-se-short"
+                            datasource="bid_strategy_data_source" name="bid_strategy"
+                            ng-change=""></adx-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="field-L">Available duration</label>
+                    <div class="container-field">
+                        <div class="wrap-start-end-time">
+                            <div class="start-time"><span>Start</span>
+                                <input type="text" class="form-control" style="width:99px;"
+                                required
+                                ng-model="package.available_duration_from"
+                                name="available_duration_from"
+                                jqdatepicker allow-max-date="1">
+                            </div>
+                            <div class="start-time"><span>End</span>
+                                <input type="text" class="form-control" style="width:99px;"
+                                required
+                                ng-model="package.available_duration_to"
+                                name="available_duration_to"
+                                jqdatepicker allow-max-date="1">
+                            </div>
+                        </div>
+                        <span style="width: 260px" class="error" ng-if="is_error_available_duration_from"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Start date must be larger than current date' | translate}}</span>
+                        <span style="width: 260px" class="error" ng-if="is_error_available_duration_to && !is_error_available_duration_from"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'End date must be larger than start date' | translate}}</span>
+                        <ng-messages for="package_form_step_1.available_duration_from.$error" role="alert" ng-if="is_error">
+                            <span style="width: 200px" class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid available duration (Start)' | translate}}</span>
+                        </ng-messages>
+                        <ng-messages for="package_form_step_1.available_duration_to.$error" role="alert" ng-if="is_error">
+                            <span style="width: 200px" class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid available duration (End)' | translate}}</span>
+                        </ng-messages>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Grant permission to</label>
+                    <div class="container-field">
+                        <div class="select-dropdown clearfix">
+                            <grant-permission required ng-model="package.grant_permission" name="grant_permission"></grant-permission>
+                            <ng-messages for="package_form_step_1.grant_permission.$error" role="alert" ng-if="is_error" ng-messages-multiple>
+                                <span class="error" ng-message="required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid grant permission' | translate}}</span>
+                            </ng-messages>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="clearfix">
+                <button type="button" class="btn btn-grey" ng-click="submitStepOne()">Continue<i class="icon-arrow-right"></i></button>
+            </div>
+        </div>
+    </form>
+</div>

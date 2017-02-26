@@ -1,0 +1,68 @@
+<div class="form-group-audience" ng-show="!is_undo_new_tag_remarketing">
+    <div class="container-field">
+        <div class="bg-page-basic inner-page " ng-class="{'border-error':!data_source_selected.length && error}">
+            <p class="mb-15">Select an existing tag below or create a new one to associate with this list.</p>
+            <div class="form-group-son mb-0">
+                <div class="two-equal-column">
+                    <div class="inner">
+                        <div class="border">
+                            <div class="form-search">
+                                <div class="search inline" style="width:354px;">
+                                    <input type="text" placeholder="Search by name" ng-model="search_server"
+                                           class="form-control">
+                                    <button type="submit" class="btn-search"><i class="icon-search-blue"></i></button>
+                                </div>
+                                <button type="button" class="btn btn-green pull-right mr-0"
+                                        ng-click="newTagRemarketing()" ng-if="+edit != 1"><i class="icon-plus-white mr-10"></i>New Tag
+                                </button>
+                            </div>
+                            <div class="inner-left">
+                                <div class="wrap-table">
+                                    <div class="header"><strong>Tags:</strong> {{data_total | number}}</div>
+                                    <div class="body" style="position: relative;">
+                                        <ul class="list-collapse scrollbar-dynamic"
+                                            data-jquery-scrollbar="jqueryScrollbarOptions">
+                                            <li ng-repeat="object in data_source">
+                                                <a href="" ng-class="{disable:object.checked}">{{object[config.object_name]}}
+                                                    <button type="button" class="btn-arrow"
+                                                            ng-click="!object.checked && select(object)"></button>
+                                                </a></li>
+
+                                        </ul>
+                                        <div class="loading">
+                                            <div class="loading-icon"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="inner-right">
+                                <div class="wrap-table-right">
+                                    <div class="header"><strong>Selected tags: {{data_source_selected.length}}</strong>
+                                    </div>
+                                    <div class="body">
+                                        <div class="list-inner scrollbar-dynamic">
+                                            <div class="inner-row" ng-repeat="object in data_source_selected">
+                                                <span class="">{{object[config.object_name]}}</span>
+                                                <a href="" class="btn-close" ng-click="remove(object,$event)"></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="error" ng-show="!data_source_selected.length && error"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Please select at least one tag' | translate}}</span>
+</div>
+
+<div class="form-group-audience" ng-show="is_undo_new_tag_remarketing">
+    <div class="container-field">
+        <div class="bg-page-basic inner-page">
+            After you save this list, we'll create a new tag that you can find on the next page. <a
+                href="" ng-click="undoNewTagRemarketing()">Undo</a>
+        </div>
+    </div>
+</div>

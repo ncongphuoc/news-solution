@@ -1,0 +1,45 @@
+<div class="container-login">
+    <div class="inner-content">
+        <div class="login-left">
+            <div class="login-label">
+                <p>{{'ANTS – Empowering the Digital Media' | translate}}<br/>
+                    {{'Ad Exchange, Ad Server, Analytics' | translate}}</p>
+                <span>{{'Unleash the full economic potential of #Digital Business!' | translate}}</span>
+                <i class="arr-tooltip"></i><i class="light-idea"></i></div>
+            <div class="login-computer"><img ng-src="{{ST_HOST}}/images/img-computer.jpg" width="224" height="295" alt=""/>
+                <ul>
+                    <li><i class="icon-maxi"></i>{{'Maximinze' | translate}}<br/>
+                        {{'Publisher Revenue' | translate}}
+                    </li>
+                    <li><i class="icon-demo"></i>{{'Demographic' | translate}}<br/>
+                        {{'Contextual Targeting' | translate}}
+                    </li>
+                    <li><i class="icon-yeild"></i>{{'Yeild Optiminzation'| translate}}<br/>
+                        {{'With Ad Exchange' | translate}}
+                    </li>
+                    <li><i class="icon-pricing"></i>{{'Pricing Models:' | translate}}<br/>
+                        {{'CPD, CPM, CPC, CPV, CPA' | translate}}
+                    </li>
+                    <li><i class="icon-manage"></i>{{'Manage Ad Across' | translate}}<br/>
+                        {{'PC, Mobile, Video and APPs' | translate}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="login-right">
+            <iframe class="login-widget" src="{{AUTH_ADX_DOMAIN+'?app_name=ADMIN&app_id=' + APP_ID  }}"></iframe>
+            <div class="loading loading-show" ng-if="showLoading" ng-class="{'use-relative': showLoading}">
+                <div class="loading-icon"></div>
+            </div>
+        </div>
+    </div>
+    <style>
+
+        div.loading-show {
+            display: block!important;
+        }
+        div.use-relative {
+            position: relative;
+        }
+    </style>
+</div>

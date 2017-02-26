@@ -1,0 +1,229 @@
+<div class="wrap-table" ng-include="getTemplate()"></div>
+<script type="text/ng-template" id="type_one.html">
+    <div class="dropdown" uib-dropdown auto-close="outsideClick" is-open="is_open">
+        <button id="dropdown" type="button" uib-dropdown-toggle class="btn btn-default">
+            {{list_selected.length}}
+            {{config.type == 1 ? 'selected'  : 'choose' | translate}}
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu" uib-dropdown-menu >
+            <li ng-show="config.is_search == 1">
+                <div class="search-filter">
+                    <form>
+                        <input ng-model="search_text"
+                               type="text" placeholder="Find">
+                        <button ng-click="searchLabel();" type="button"><i class="icon-search"></i></button>
+                    </form>
+                </div>
+            </li>
+            <li class="">
+                <ul class="nice-scroll dropdown-label">
+                    <li ng-repeat="object in data_source | filter:search_text">
+                        <div>
+                            <label class="">
+                                <div class="icheckbox_square-blue" style="position: relative;">
+                                    <input id="input_check_{{object[config.object_id]}}" ng-model="object.checked" iCheck
+                                           type="checkbox" ng-true-value="true" ng-false-value="false"
+                                           class="icheck" ng-change="change(object)"
+                                           style="position: absolute; top: -5%; left: -5%; display: block; width: 110%; height: 110%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+                                    <ins id="label_{{object[config.object_id]}}"
+                                         class="iCheck-helper"
+                                         style="position: absolute; top: -5%; left: -5%; display: block; width: 110%; height: 110%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                                </div>
+                                <span id="id_{{object[config.object_id]}}" ng-click="change(object)">{{object[config.object_name]}}</span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</script>
+<script type="text/ng-template" id="type_two.html">
+    <div class="dropdown" uib-dropdown auto-close="outsideClick" is-open="$parent.is_open">
+        <button id="dropdown" type="button" uib-dropdown-toggle class="btn btn-default">
+            {{list_selected.length}}
+            {{config.type == 1 ? 'selected'  : 'choose' | translate}}
+            <span class="caret"></span></button>
+        <div class="dropdown-menu dropdown-all-account dropdown-choose " uib-dropdown-menu>
+            <div class="left-block">
+                <div class="inner">
+                    <div class="border">
+                        <div class="inner-left">
+                            <div class="wrap-table">
+                                <div class="form-search">
+                                    <input type="text" name="line-item-name" ng-model="$parent.search_server" placeholder="{{'Search' | translate}}" class="form-control">
+                                    <button type="button"><i class="icon-search-blue"></i></button>
+                                </div>
+                                <div style="position: relative">
+                                    <div class="nice-scroll nice-scroll-account" when-scroll-ends="loadMoreRecords()">
+                                        <ul class="list-collapse" ng-show="data_source.length">
+                                            <li class="clearfix" ng-repeat="object in data_source">
+                                                <div class="target-parent">
+
+                                                    <a href="" ng-click="" data-toggle="collapse">
+                                                        <i class="parent-name ng-binding ng-scope"
+                                                           ng-if="config.object_id == 'audience_id' && object.audience_category_name != undefined && object.audience_category_name != ''">
+                                                            {{object.audience_category_name}} »
+                                                        </i>
+                                                        {{object[config.object_name]}}
+                                                    </a>
+                                                    <button type="button" class="btn-arrow" ng-click="!object.checked && select(object)" ng-class="{active:object.checked}"></button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="list-collapse" ng-show="!data_source.length">
+                                            {{'No item match of the filter' | translate}}
+                                        </ul>
+
+                                    </div>
+                                    <div class="loading"><div class="loading-icon"></div></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="inner-right">
+                            <div class="wrap-table-right">
+                                <div class="nice-scroll nice-scroll-account">
+                                    <div  ng-repeat="object in data_source_selected">
+                                        <div class="dropdown-choose-row">
+                                            <span>
+                                                <i class="parent-name ng-binding ng-scope"
+                                                   ng-if="config.object_id == 'audience_id' && object.audience_category_name != undefined && object.audience_category_name != ''">
+                                                    {{object.audience_category_name}} »
+                                                </i>
+                                                {{object[config.object_name]}}
+                                            </span>
+                                            <a href="javascript:void(0)" class="btn-close" ng-click="remove(object,$event)"></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"><button ng-click="closeDropdown()" class="btn btn-green">Done</button></div>
+        </div>
+
+    </div>
+</script>
+<script type="text/ng-template" id="type_three.html">
+    <div class="dropdown" uib-dropdown auto-close="disabled" is-open="$parent.is_open">
+        <button id="dropdown" type="button" uib-dropdown-toggle class="btn btn-default">
+            {{total_affinity_output}}
+            {{config.type == 1 ? 'selected'  : 'choose' | translate}}
+            <span class="caret"></span></button>
+        <div class="dropdown-menu dropdown-audience" uib-dropdown-menu>
+            <choose-target ng-model="choose_target.ng_model"
+                           source="choose_target.config.config"
+                           is-load="true"
+                           id="choose_target.key"
+                           show-remove="false"
+                           remove="removeTarget(id)"
+                           ng-show="true"
+                           edit="true"
+                           in-drop-down="true"
+            ></choose-target>
+            <div class="clearfix"><button ng-click="closeDropdown()" class="btn btn-green">Done</button></div>
+        </div>
+
+    </div>
+    <demographic></demographic>
+</script>
+
+
+<script type="text/ng-template" id="type_four.html">
+    <div class="dropdown" uib-dropdown auto-close="outsideClick" is-open="is_open" on-toggle="closeDropDownLabel()">
+        <button id="dropdown" type="button" uib-dropdown-toggle class="btn btn-default">
+            <span ng-show="list_selected.length">
+                {{list_selected.length}}
+                {{config.type == 1 ? 'selected'  : 'choose' | translate}}
+            </span>
+            <span ng-show="!list_selected.length">
+                {{text_drop_down}}
+            </span>
+
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu" uib-dropdown-menu >
+            <li ng-show="config.is_search == 1">
+                <div class="search-filter">
+                    <form>
+                        <input ng-model="$parent.search_server"
+                               type="text" placeholder="Find">
+                        <button type="button"><i class="icon-search"></i></button>
+                    </form>
+                </div>
+            </li>
+            <li style="position: relative">
+                <div ng-if="!data_source.length" class="ml-15">Empty</div>
+                <div class="loading"><div class="loading-icon"></div></div>
+                <ul class="scrollbar-dynamic dropdown-label" data-jquery-scrollbar="jqueryScrollbarOptions">
+                    <li ng-repeat="object in data_source | filter:search_text">
+                        <div>
+                            <label class="">
+                                <div class="icheckbox_square-blue" style="position: relative;">
+                                    <input id="input_check_{{object[config.object_id]}}" ng-model="object.checked" iCheck
+                                           type="checkbox" ng-true-value="true" ng-false-value="false"
+                                           class="icheck" ng-change="change(object)"
+                                           style="position: absolute; top: -5%; left: -5%; display: block; width: 110%; height: 110%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+                                    <ins id="label_{{object[config.object_id]}}"
+                                         class="iCheck-helper"
+                                         style="position: absolute; top: -5%; left: -5%; display: block; width: 110%; height: 110%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                                </div>
+                                <span id="id_{{object[config.object_id]}}" ng-click="change(object)">{{object[config.object_name]}}</span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+
+            </li>
+
+        </ul>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="type_five.html">
+    <div class="dropdown" uib-dropdown auto-close="outsideClick" is-open="is_open">
+        <button id="dropdown" type="button" uib-dropdown-toggle class="btn btn-default">
+            {{list_selected.length}}
+            {{config.type == 1 ? 'selected'  : 'choose' | translate}}
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu" uib-dropdown-menu >
+            <li ng-show="config.is_search == 1">
+                <div class="search-filter">
+                    <form>
+                        <input ng-model="$parent.search_server"
+                               type="text" placeholder="Find">
+                        <button type="button"><i class="icon-search"></i></button>
+                    </form>
+                </div>
+            </li>
+            <li style="position: relative">
+                <div ng-if="!data_source.length" class="ml-15">Empty</div>
+                <div class="loading"><div class="loading-icon"></div></div>
+                <ul class="scrollbar-dynamic dropdown-label" data-jquery-scrollbar="jqueryScrollbarOptions">
+                    <li ng-repeat="object in data_source | filter:search_text">
+                        <div>
+                            <label class="">
+                                <div class="icheckbox_square-blue" style="position: relative;">
+                                    <input id="input_check_{{object[config.object_id]}}" ng-model="object.checked" iCheck
+                                           type="checkbox" ng-true-value="true" ng-false-value="false"
+                                           class="icheck" ng-change="change(object)"
+                                           style="position: absolute; top: -5%; left: -5%; display: block; width: 110%; height: 110%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+                                    <ins id="label_{{object[config.object_id]}}"
+                                         class="iCheck-helper"
+                                         style="position: absolute; top: -5%; left: -5%; display: block; width: 110%; height: 110%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                                </div>
+                                <span id="id_{{object[config.object_id]}}" ng-click="change(object)">{{object[config.object_name]}}</span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+
+            </li>
+        </ul>
+    </div>
+</script>

@@ -1,0 +1,123 @@
+<div>
+    <div ng-show="lineItemType != LINE_ITEM_TYPE.PRIVATE_DEAL">
+        <div class="form-group form-location">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="locationType" class="icheck" value="all" ng-change="changeLocation()"><span>All countries and territories</span>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="locationType" class="icheck" value="vn" ng-change="changeLocation()"><span>Vietnam</span>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="locationType" class="icheck" value="custom" ng-change="changeLocation()"><span>Let me choose...</span>
+                </label>
+            </div>
+        </div>
+        <div class="inner-all" ng-show="locationType=='custom'">
+            <div class="inner">
+                <div class="search-location">
+                    <input type="text" name="location" ng-model="location" class="form-control italic"
+                           placeholder="{{'Enter location: a country, city' | translate}}"
+                           ng-focus="customFocus()" ng-required="locationType=='custom' && arrSelLocation.length == 0 && lineItemType != LINE_ITEM_TYPE.PRIVATE_DEAL"
+                           ng-model-options="{ debounce: 200 }" ng-change="doSearchLocation()">
+                    <button type="button" class="btn"><i class="icon-search-grey"></i></button>
+                    <span class="error" ng-show="showLocationError">
+                        {{'Please select at least one location.' | translate}}
+                    </span>
+                </div>
+                <div class="inner-left">
+                    <div class="wrap-table">
+                        <div class="top-header">
+                            <h4><strong>Matches</strong><a href=""><i class="icon-arr-top-grey"></i></a></h4>
+                            <a href="" class="add-all" ng-click="addAllCountry()" ng-hide="true">Add all</a> </div>
+                        <div class="nice-scroll" when-scroll-ends="lazyloadLocation()">
+                            <ul class="list-collapse">
+                                <li ng-repeat="country in arrLocation">
+                                    <div class="target-parent">
+                                        <a ng-click="getProvince(country)" aria-expanded="{{country.isCollapsed}}" href="" data-toggle="collapse">
+                                            {{country.location_name}} <span class="country">- country</span>
+                                        </a>
+                                        <button type="button" class="btn-arrow"  ng-click="addCountry(country)">
+                                            <i class="icon-btn-arrow-grey" ng-class="{'active': country.selected}"></i>
+                                        </button>
+                                        <div uib-collapse="!country.isCollapsed" class="collapse">
+                                            <ul class="sub-collapse">
+                                                <li ng-repeat="province in country.child">
+                                                    <div class="target-parent"> <a href="">{{province.location_name}} <span class="country">- province</span></a>
+                                                        <button type="button" class="btn-arrow"  ng-click="addLocation({location_id: country.location_id, location_name: country.location_name}, province)">
+                                                            <i class="icon-btn-arrow-grey" ng-class="{active:province.selected}"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="loading load-more" ng-class="{'load-show': loadMore}"><div class="loading-icon"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner-right">
+                    <div class="wrap-table">
+                        <div class="top-header">
+                            <h4><strong>Targeted locations</strong><a href=""><i class="icon-arr-top-grey"></i></a></h4>
+                            <a href="" class="remove-all" ng-click="removeAllCountries()" ng-show="arrSelLocation.length">Remove all</a>
+                            <a class="remove-all un-remove" ng-hide="arrSelLocation.length">Remove all</a>
+                        </div>
+                        <div class="nice-scroll">
+                            <ul class="list-collapse">
+                                <li ng-repeat="country in arrSelLocation">
+                                    <div class="target-parent">
+                                        <a ng-click="country.isCollapsed = !country.isCollapsed" aria-expanded="{{country.isCollapsed}}" href="" data-toggle="collapse">{{country.location_name}} <span class="country">- country</span></a>
+                                        <button type="button" class="btn-close" ng-click="removeCountry(country)"><i class="icon-remove-grey"></i></button>
+                                        <div uib-collapse="!country.isCollapsed" class="collapse">
+                                            <ul class="sub-collapse">
+                                                <li ng-repeat="province in country.child">
+                                                    <div class="target-parent"> <a href="">{{province.location_name}} <span class="country">- province</span></a>
+                                                        <button type="button" class="btn-close" ng-click="removeLocation(country, province)"><i class="icon-remove-grey"></i></button>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="lineItemType == LINE_ITEM_TYPE.PRIVATE_DEAL" class="view-location scrollbar-dynamic" data-jquery-scrollbar="{}">
+        <table width="100%" border="0">
+            <tbody>
+            <tr>
+                <th scope="col">Targeted locations:</th>
+            </tr>
+            <tr>
+                <td>
+                    <ul ng-if="locationType == 'all'">
+                        <li>{{'All countries and territories'|translate}}</li>
+                    </ul>
+                    <ul ng-if="locationType == 'vn'">
+                        <li >Vietnam (country)</li>
+                    </ul>
+                    <ul ng-if="locationType == 'custom' && locationList">
+                        <li ng-repeat="loc in locationList.location|orderObjectBy:'location_name'|limitTo:limitLoc">{{loc.location_name}} ({{loc.country?loc.country:'country'}})</li>
+                        <li ng-show="limitLoc<totalLoc"><a href=""  ng-click="limitLoc=totalLoc">» View more ...</a> </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

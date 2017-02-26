@@ -1,0 +1,19 @@
+<div class="form-group form-package1">
+    <label class="label-field"><span class="text-dot">Frequency capping</span></label>
+    <div class="container-field mt-5">
+        <div class="radio mb-20">
+            <input type="radio" name="preque" class="icheck" ng-model="package.option" value="0">
+            No cap on viewable impressions
+        </div>
+        <div class="radio form-inline">
+            <input type="radio" name="preque" class="icheck" ng-model="package.option" value="1">
+            <input type="text" name="frequency" adx-format-number ng-model="package.frequency" class="form-control" ng-required="package.option==1" min="1" maxlength="3" pattern="^[1-9]+([0-9]+)*$" ng-disabled="package.option == 0"> viewable impressions
+            <adx-dropdown datasource="arrOpt" ng-model="package.freq_opt" disabled="package.option == 0"></adx-dropdown>
+            <adx-dropdown datasource="arrType" ng-model="package.freq_type" disabled="package.option == 0"></adx-dropdown>
+            <span class="error" etype="pattern" ng-if="is_error && $parent.package_form_step_2.frequency.$error.required"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid Frequency capping' | translate}}</span>
+            <span class="error" ng-if="is_error && $parent.package_form_step_2.frequency.$error.min"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Frequency capping too small' | translate}}</span>
+            <span class="error" ng-if="is_error && $parent.package_form_step_2.frequency.$error.maxlength"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Frequency capping too large' | translate}}</span>
+            <span class="error" etype="pattern" ng-if="is_error && $parent.package_form_step_2.frequency.$error.pattern"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid Frequency capping' | translate}}</span>
+        </div>
+    </div>
+</div>

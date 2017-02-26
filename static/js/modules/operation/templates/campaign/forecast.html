@@ -1,0 +1,38 @@
+<!-- <div class="top-heading"> -->
+    <!-- <p>Weekly available impressions</p>
+    <p><strong>Display Network</strong></p>
+    <p><span>{{ rangeSelected }}</span> Impressions</p> -->
+<div class="top-heading">
+    <p class="text"><span style="color:#{{ health_color }}">{{ rangeSelected }}</span>Impressions/ week</p>
+    <p class="blood"><span style="background-color:#{{ health_color }}; width:{{ health_persen }}"></span></p>
+    <p class="specific"><span class="pull-left">SPECIFIC</span><span class="pull-right">BROAD</span></p>
+</div>
+<!-- </div> -->
+<div class="body">
+    <div ng-show="target_method.length" class="forecastChart">
+        <div class="loading">
+            <div class="loading-icon"></div>
+        </div>
+        <div ng-show="target_method.length < 4" class="forecast-chart-container">
+            <div class="forecast-chart" venn="vennData" width="212" height="150"></div>
+        </div>
+    </div>
+    <div ng-show="target_method.length" class="target-method" ng-style="target_method.length >=4 && {'padding-top': '10px'}">
+        <p><strong>Targeting methods</strong></p>
+
+        <p ng-repeat="target in target_method"><span ng-style="{'background-color':target_method.length < 4 ? target.color : '#999'}" style="opacity: 0.25" class="circle-sm"></span>{{target.name}} ({{target.number}})</p>
+
+        <!--<p><span style="background-color: #03a9f4; opacity: 0.25" class="circle-sm"></span>Interests &amp; remarketing (7)</p>
+        <p><span style="background-color: #e91e63; opacity: 0.25" class="circle-sm"></span>Topics (7)</p>
+        <p><span style="background-color: #ffe155; opacity: 0.25" class="circle-sm"></span>Placements (7)</p>-->
+    </div>
+</div>
+<div ng-show="target_method.length && color_intersect.length && target_method.length < 4" class="available-impression">
+    <p><span ng-style="{'background-color':color_intersect}" style="opacity: 0.25" class="circle-sm"></span>Available impressions</p>
+    <p><span class="circle-sm"></span>{{ rangeSelected }}</p>
+</div>
+<div class="footer">
+    <p>This is just an estimate of your initial targeting reach and doesn't take into account automated targeting
+        methods or bid, budget and device settings.</p>
+    <p><a href="#">Learn more</a></p>
+</div>

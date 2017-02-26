@@ -1,0 +1,17 @@
+<div class="select-dropdown clearfix">
+    <div class="ui-select-container dropdown form-control">
+        <div>
+            <span class="ui-select-match">
+                <span ng-repeat="user in user_data">{{user.fullname}}<a href="javascript:void(0)" ng-click="removeUser(user.user_id)"><i class="icon-close-white"></i></a></span>
+            </span>
+            <input type="search"
+                   ng-model="keyword"
+                   ng-keypress="searchUser()"
+                   class="ui-select-search"
+                   data-toggle="my-dropdown">
+        </div>
+        <ul ng-if="is_show_suggest" class="ui-select-dropdown dropdown-menu" style="display:block;">
+            <li ng-repeat="user_search in list_user"><a ng-click="addUser(user_search.user_id, user_search.full_name)" href="javascript:void(0)">{{user_search.full_name}}</a></li>
+        </ul>
+    </div>
+</div>

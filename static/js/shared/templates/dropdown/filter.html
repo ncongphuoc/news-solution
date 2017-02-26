@@ -1,0 +1,16 @@
+<div class="dropdown" uib-dropdown>
+    <button type="button" class="btn btn-default" uib-dropdown-toggle>Filter<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li ng-repeat="item in dataSource.filter.group1.child" ng-class="item.class">
+            <a href="" title="{{item.value}}" ng-click="changeFilter(item.key)">{{item.value}}</a>
+        </li>
+        <li class="divider"></li>
+        <li ng-repeat="item in dataSource.filter.group3.child" ng-class="item.class">
+            <a href="" title="{{item.value}}" class="item-action" >
+                <span style="width: 145px" ng-click="changeFilter(item.key)">{{item.value}}</span>
+                <button type="button" class="btn-action" ng-click="removeFilter(item.key)" ng-if="item.canDelete">Remove</button>
+            </a>
+
+        </li>
+    </ul>
+</div>

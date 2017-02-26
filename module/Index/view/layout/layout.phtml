@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="<?php echo SITE_URL . PRODUCT_VERSION;?>/buyer#/">
+    <meta charset="utf-8">
+    <!--Google fonts-->
+    <link href="<?php echo STATIC_URL; ?>/css/css.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo STATIC_URL; ?>/css/bootstrap.min.css?v=<?php echo STATIC_VERSION; ?>">
+    <link href="<?php echo STATIC_URL; ?>/css/screen.min.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/custom.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/screen.custom.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/style.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/js/libs/angular-bootstrap-colorpicker/colorpicker.css" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/jquery-ui.min.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/perfect-scrollbar.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/custom-scrollbar.min.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+    <link href="<?php echo STATIC_URL; ?>/css/jquery.scrollbar.min.css?v=<?php echo STATIC_VERSION; ?>" rel="stylesheet">
+
+    <title page-title ng-cloak translate="Powered by Ants Advertising Platform">Powered by Ants Advertising Platform</title>
+</head>
+<body ng-cloak>
+<div id="wrapper" ng-controller="systemRootController">
+    
+    <div ui-view="header"></div>
+    <main ng-class="getNavbarClass(toggleNavbar)">
+        <div ui-view="leftnav"></div>
+        <div class="outer-content" ng-class="{'login-content': hasLeftNav(), 'pl-0' : !containerCus()}">
+            <div class="container-fluid">
+                <div ui-view="content"></div>
+                <div ui-view="footer"></div>
+            </div>
+        </div>
+    </main>
+    <div id="loading" ng-show="showLoading">
+        <img src="<?php echo STATIC_URL; ?>/images/loading.gif" alt="Loading" /><br/>
+        <span>Loading...</span>
+    </div>
+    <script type="text/ng-template" id="modal.html">
+        <div class="modal-dialog popup-brand popup-brand-6">
+            <div class="modal-content" ng-class="{'pl-42': options.type=='warning' || options.type=='error'|| options.type=='success'}">
+                <div class="modal-header">
+                    <a href="" ng-click="options.close()"><i class="icon-close">X</i></a>
+                    <h4 class="modal-title">
+                        <i ng-class="{'icon-warning-yellow': options.type=='warning', 'icon-error-red-small':options.type=='error', 'icon-success-green': options.type=='success'}"></i>
+                        {{options.headerText}}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{options.bodyText}}</p>
+                </div>
+                <div class="modal-footer" >
+                    <hr>
+                    <button style="min-width: 50px;" type="button" class="btn btn-green" ng-click="options.ok('ok')" ng-if="options.actionText.length">{{options.actionText}}</button>
+                    <button type="button" class="btn btn-grey" data-dismiss="modal" ng-click="options.close()">{{options.closeText}}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </script>
+    <script type="text/ng-template" id="waiting.html">
+        <div class="modal-dialog popup-dropdown-menu">
+            <div class="modal-content">
+                <div class="modal-header">
+                     <h4 class="modal-title">{{options.headerText}}</h4>
+                </div>
+                <div class="modal-body" >
+                    <p>{{options.bodyText}}</p>
+                </div>
+             </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="wrap-modal.html">
+        <div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal"
+            uib-modal-animation-class="fade"
+            modal-in-class="in"
+            ng-style="{'z-index': 1050 + index*10, display: 'block'}">
+            <div uib-modal-transclude></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="wrap-modal-custom.html">
+            <div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal modal-default"
+                uib-modal-animation-class="fade"
+                modal-in-class="in"
+                ng-style="{'z-index': 1050 + index*10, display: 'block'}">
+                <div uib-modal-transclude></div>
+            </div>
+    </script>
+    <script type="text/ng-template" id="error-summary.html">
+    <div class="error_all ng-binding" ng-if="errors.length">
+        <i class="icon-warning-red"></i>
+        <div class="text">
+            <h4>{{'Please correct the errors below' | translate}}</h4>
+            <div class="error-summary">
+                <p ng-repeat="error in errors">{{error}}</p>
+            </div>
+        </div>
+    </div>
+    </script>
+
+</div>
+<script>
+    var ST_HOST = "<?php echo STATIC_URL;?>",
+        API_HOST = "<?php echo SITE_URL . PRODUCT_VERSION;?>/api",
+        API_BUYER_HOST = "<?php echo API_BUYER_HOST?>",
+        API_ID = "<?php echo NETWORK_ID;?>",
+        PRODUCT_VERSION = "<?php echo PRODUCT_VERSION;?>",
+        ST_VERSION = "<?php echo STATIC_VERSION;?>",
+        ST_URL_UPLOAD = "<?php echo UPLOAD_URL?>",
+        DATA_VERSION = 1478503829,
+        ST_REVIEW_CREATIVE_LINK="<?php echo DELIVERY_PREVIEW_DOMAIN?>",
+        SITE_URL = "<?php echo SITE_URL;?>",
+        WEBSOCKET_SERVER = "<?php echo WEBSOCKET_SERVER; ?>",
+        WEBSOCKET_PORT = "<?php echo WEBSOCKET_PORT; ?>",
+        PREVIEW_ADX_DOMAIN = "<?php echo PREVIEW_ADX_DOMAIN; ?>",
+        NAMESPACE_DELIVERY = "<?php echo NAMESPACE_DELIVERY; ?>",
+        STATIC_DELIVERY_DOMAIN = "<?php echo STATIC_DELIVERY_DOMAIN; ?>";
+        AUTH_ADX_DOMAIN = "<?php echo AUTH_ADX_DOMAIN?>";
+</script>
+<script src="<?php echo STATIC_URL; ?>/js/libs/autobahn/autobahn.min.js"></script>
+<script src="<?php echo STATIC_URL; ?>/js/libs/html-canvas/html2canvas.js"></script>
+<script src='<?php echo STATIC_URL; ?>/js/libs/respond/respond.min.js?v=<?php echo STATIC_VERSION; ?>'></script>
+<?php echo $this->content; ?>
+
+
+</body>
+</html>

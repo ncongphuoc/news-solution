@@ -1,0 +1,79 @@
+<div class="filter-bar">
+    <div class="dropdown" uib-dropdown>
+        <button type="button" class="btn btn-default" uib-dropdown-toggle>
+            <i class="icon-square blue mb-1"></i>
+            <i ng-if="arr_filter.isCompare" class="icon-square blue-compare mb-1"></i>
+            {{ arr_filter.metric_value }}<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+            <li ng-repeat="item in dataSource.metric" class="dropdown-submenu">
+                <a href="">{{ item.value }}</a>
+                <ul class="dropdown-menu" ng-if="item.child.length">
+                    <li ng-repeat="subItem in item.child">
+                        <a href ng-click="changeMetric(subItem.key, subItem.value)">{{ subItem.value }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="join-input">vs</div>
+    <div class="dropdown split-v" uib-dropdown>
+        <button type="button" class="btn btn-default" uib-dropdown-toggle>
+            <i ng-if="arr_filter.metric_compare_value != 'None'" class="icon-square orange mb-1"></i>
+            <i ng-if="arr_filter.isCompare" class="icon-square orange-compare mb-1"></i>
+            {{ arr_filter.metric_compare_value }}<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+            <li ng-repeat="item in dataSource.metric_compare" ng-class="{'dropdown-submenu':item.child.length}">
+                <a ng-click="!item.child.length && changeMetricCompare(item.key, item.value)" href="">{{ item.value }}</a>
+                <ul class="dropdown-menu" ng-if="item.child.length">
+                    <li ng-repeat="subItem in item.child">
+                        <a href ng-click="changeMetricCompare(subItem.key, subItem.value)">{{ subItem.value }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <account-filter></account-filter>
+    <div class="dropdown split-v" uib-dropdown>
+        <button type="button" class="btn btn-default" uib-dropdown-toggle>{{ arr_filter.time_value }}<span
+                class="caret"></span></button>
+        <ul class="dropdown-menu filter-top-time" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+            <li ng-class="{'item-disable': !item.enable}" ng-repeat="item in dataSource.time">
+                <a href="" ng-click="item.enable && changeTime(item.key, item.value)">{{item.value}}</a>
+            </li>
+        </ul>
+    </div>
+    <filter-drop-down config="config_filter"></filter-drop-down>
+    <div ng-show="show_box_search" class="search-filter dropdown" uib-dropdown is-open="search_opened">
+        <form>
+            <input class="search-listing" type="text" placeholder="{{ search_placeholder }}"
+                   ng-click="clickSearch(search)" ng-change="changeSearch(search)" ng-model="search">
+            <button type="submit" ng-click="filterSearch(search)"><i class="icon-search"></i></button>
+        </form>
+        <ul class="dropdown-menu dropdown-search" style="min-width: 250px">
+            <li style="padding: 0 15px" ng-class="search_not_found ? 'visible' : 'invisible'">
+                <div>No {{search_object}} found that contain <b>{{search}}</b></div>
+            </li>
+            <li ng-class="search_not_found ? 'invisible' : 'visible'" ng-click="filterSearch(search)" ng-model="search">
+                <div class="search-filter-btn" ng-model="search"><i class="icon-filter-grey"></i> Filter
+                    {{search_object}} on <b>{{search}}</b></div>
+            </li>
+            <li style="padding: 0 15px" ng-class="show_navigate ? 'visible' : 'invisible'">
+                <div>OR NAVIGATE TO</div>
+            </li>
+            <li ng-repeat="item in dataSource.search">
+                <a href="" ng-click="gotoDetail(item)" data-toggle="tooltip" title="{{ item.name }}">
+                    <i class="icon-campaign-grey-2"></i>{{ item.name }}
+                </a>
+            </li>
+
+            <!--<li><a href="#"><i class="icon-campaign-grey"></i>Campaign 1</a></li>
+            <li class="disabled"><a href="#"><i class="icon-campaign-grey"></i>Image</a></li>
+            <li><a href="#"><i class="icon-campaign-grey-2"></i>Lifeboy</a></li>
+            <li><a href="#"><i class="icon-campaign-grey-2"></i>Pepsi</a></li>-->
+        </ul>
+    </div>
+
+    <!-- <a href="#" title="View Change History" class="btn btn-link">View Change History</a> -->
+</div>

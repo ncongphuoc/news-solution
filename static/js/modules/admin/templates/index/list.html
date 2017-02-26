@@ -1,0 +1,540 @@
+<div class="col-md-12 col-8">
+    <div class="widget">
+        <div class="widget-header">
+            <h3><i class="icon-real-time"></i>Real time Data<a href=""><i class="icon-minimize-black"></i></a></h3>
+        </div>
+        <div class="widget-content">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="dropdown dropdown-viewable" uib-dropdown>
+                        <button type="button" uib-dropdown-toggle class="btn btn-default">Impression<span
+                                class="caret"></span></button>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li><a href="#" title="CPC">Impression</a></li>
+                            <li><a href="#" title="vCPM">Click</a></li>
+                        </ul>
+                    </div>
+                    <div class="flot-chart">
+                        <div class="chart-realtime-minute">
+                            <real-time-chart settings="minute"></real-time-chart>
+                        </div>
+                        <div class="chart-realtime-second">
+                            <real-time-chart settings="second"></real-time-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <!--<div class="select-device">
+                        <div class="radio-horizontal">
+                            <div class="radio-brand">
+                                <input type="radio" name="brand" checked class="custom-radio">
+                                <label>radio</label>
+                            </div>
+                            <span id="">Devices</span>
+                        </div>
+                        <div class="radio-horizontal">
+                            <div class="radio-brand">
+                                <input type="radio" name="brand" class="custom-radio">
+                                <label>radio</label>
+                            </div>
+                            <span>Location</span>
+                        </div>
+                    </div>-->
+                    <div class="select-device">
+                        <div class="form-group form-group-horizontal">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="a" class="icheck">
+                                    Devices  </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="a" class="icheck">
+                                    Location  </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="number-device">
+                        <div class="row">
+                            <div class="col-md-4 screen-all">
+                                <p class="screen"
+                                   style="background:url('{{static_url}}/images/img-mobile.png') no-repeat center top; width:97px; height:52px; margin-top: 14px;">
+                                    <span class="">38<i>%</i></span></p>
+                            </div>
+                            <div class="col-md-4 screen-all">
+                                <p class="screen"
+                                   style="background:url('{{static_url}}/images/img-tablet.png') no-repeat center top; width:99px; height:77px; margin-top: 2px;">
+                                    <span class="">38<i>%</i></span></p>
+                            </div>
+                            <div class="col-md-4 screen-all">
+                                <p class="screen"
+                                   style="background:url('{{static_url}}/images/img-laptop.png') no-repeat center top; width:138px; height:80px;">
+                                    <span class="">38<i>%</i></span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="number-people">
+                                    <p class="people green">1.01 <span>M</span></p>
+                                    <p class="text">Viewable<br>
+                                        Impression</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="number-people">
+                                    <p class="people blue">3.00 <span>M</span></p>
+                                    <p class="text">Viewable<br>
+                                        Impression</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="number-people">
+                                    <p class="people orange">13.00 <span>M</span></p>
+                                    <p class="text">Viewable<br>
+                                        Impression</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="number-location" style="display: none">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="{{static_url}}/images/img-chart-donut.png" width="242" height="242" alt="">
+                            </div>
+                            <div class="col-md-7">
+                                <ul>
+                                    <li><span class="num-donut" style="color:#bdd630">38<i>%</i></span>
+                                        <p class="text-donut"><span class="round" style="background:#bdd630;"></span>Indonesia
+                                            <span>Jakarta (30%), Bandung (25%)</span></p>
+                                    </li>
+                                    <li><span class="num-donut" style="color:#62c9d5">42<i>%</i></span>
+                                        <p class="text-donut"><span class="round" style="background:#62c9d5;"></span>Vietnam
+                                            <span>Jurong (18%), Woodland (2%)</span></p>
+                                    </li>
+                                    <li><span class="num-donut" style="color:#f99f1b">8<i>%</i></span>
+                                        <p class="text-donut"><span class="round" style="background:#f99f1b;"></span>Singapore
+                                            <span>Jurong (18%), Woodland (2%)</span></p>
+                                    </li>
+                                    <li class="end"><span class="num-donut" style="color:#c27373">12<i>%</i></span>
+                                        <p class="text-donut"><span class="round" style="background:#c27373;"></span>Thailand
+                                            <span>Jurong (18%), Woodland (2%)</span></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-8">
+    <div class="widget widget-table">
+        <div class="widget-header">
+            <div class="filter-bar">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-default"><i class="icon-square blue mr-5"></i><i
+                            class="icon-square skyblue mr-10"></i>Avg. CPC<span class="caret"></span></button>
+                </div>
+                <div class="join-input">vs</div>
+                <div class="dropdown split-v">
+                    <button type="button" class="btn btn-default"><i class="icon-square orange mr-5"></i><i
+                            class="icon-square lightorange mr-10"></i>Avg. CPM<span class="caret"></span></button>
+                </div>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-default">Daily<span class="caret"></span></button>
+                </div>
+                <a ng-click="showCustomModule()" title="View Change History" class="btn btn-link">Customize
+                    modules</a>
+                <div class="dropdown pull-right cus-breadcrumb">
+                    <button type="button" data-toggle="my-dropdown" auto-close="disabled"
+                            class="btn btn-default btn-dropdown-date"> Last 7 days: Mar 2, 2016 - Mar 8, 2016 <span
+                            class="caret"></span>
+                        <!--<span class="compare-to">Compare to: Jan 23, 2016 - Feb 21, 2016</span>--> </button>
+                    <ul class="dropdown-menu dropdown-date">
+                        <li class="date"><span>Custom</span>
+                            <input type="text" placeholder="from">
+                            &nbsp;-&nbsp;
+                            <input type="text" placeholder="to">
+                            <div class="calendar-block">
+                                <div class="calendar-header">
+                                    <button type="button" class="btn-prev"></button>
+                                    <button type="button" class="btn-next"></button>
+                                    <div class="date-text">02/2016</div>
+                                </div>
+                                <div class="calendar-content">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th><span>Mon</span></th>
+                                            <th><span>Tue</span></th>
+                                            <th><span>Wed</span></th>
+                                            <th><span>Thu</span></th>
+                                            <th><span>Fri</span></th>
+                                            <th><span>Sat</span></th>
+                                            <th><span class="text-red">Sun</span></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="none"><span>&nbsp;</span></td>
+                                            <td class="none"><span>&nbsp;</span></td>
+                                            <td class="none"><span>&nbsp;</span></td>
+                                            <td class="none"><span>&nbsp;</span></td>
+                                            <td class="none"><span>&nbsp;</span></td>
+                                            <td><span>1</span></td>
+                                            <td><span>2</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>3</span></td>
+                                            <td><span>4</span></td>
+                                            <td><span>5</span></td>
+                                            <td><span>6</span></td>
+                                            <td><span>7</span></td>
+                                            <td><span>8</span></td>
+                                            <td><span>9</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>10</span></td>
+                                            <td><span>11</span></td>
+                                            <td class="today"><span>12</span></td>
+                                            <td><span>13</span></td>
+                                            <td><span>14</span></td>
+                                            <td><span>15</span></td>
+                                            <td class="selected"><span>16</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>17</span></td>
+                                            <td><span>18</span></td>
+                                            <td><span>19</span></td>
+                                            <td><span>20</span></td>
+                                            <td><span>21</span></td>
+                                            <td><span>22</span></td>
+                                            <td><span>23</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>24</span></td>
+                                            <td><span>25</span></td>
+                                            <td><span>26</span></td>
+                                            <td><span>27</span></td>
+                                            <td><span>28</span></td>
+                                            <td><span>29</span></td>
+                                            <td><span>30</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="has-check"><a href="#" title="Today" class="item-check">Today</a></li>
+                        <li class="has-check"><a href="#" title="Yesterday" class="item-check">Yesterday</a></li>
+                        <li class="has-check"><a href="#" title="This week (Sun - Today)" class="item-check">This
+                            week (Sun - Today)</a></li>
+                        <li class="has-check"><a href="#" title="This week (Mon - Today)"
+                                                 class="item-check checked">This week (Mon - Today)</a></li>
+                        <li class="has-check"><a href="#" title="Last 7 days" class="item-check">Last 7 days</a>
+                        </li>
+                        <li class="has-check"><a href="#" title="Last week (Sun - Sat)" class="item-check">Last week
+                            (Sun - Sat)</a></li>
+                        <li class="has-check"><a href="#" title="Last week (Mon - Sun)" class="item-check">Last week
+                            (Mon - Sun)</a></li>
+                        <li class="has-check"><a href="#" title="Last business week (Mon - Fri)" class="item-check">Last
+                            business week (Mon - Fri)</a></li>
+                        <li class="has-check"><a href="#" title="Last 14 days" class="item-check">Last 14 days</a>
+                        </li>
+                        <li class="has-check"><a href="#" title="This month" class="item-check">This month</a></li>
+                        <li class="has-check"><a href="#" title="Last 30 days" class="item-check">Last 30 days</a>
+                        </li>
+                        <li class="has-check"><a href="#" title="Last month" class="item-check">Last month</a></li>
+                        <li class="has-check"><a href="#" title="All time" class="item-check">All time</a></li>
+                        <li class="divider"></li>
+                        <li class="compare"><span>Compare</span>
+                            <div class="custom-switch">
+                                <input type="checkbox" name="checkbox" id="checkbox-compare">
+                                <label for="checkbox-compare">&nbsp;</label>
+                            </div>
+                        </li>
+                        <li class="has-check collapse"><a href="#" title="Previous period"
+                                                          class="item-check checked">Previous period</a><a href="#"
+                                                                                                           title="Same period last year"
+                                                                                                           class="item-check">Same
+                            period last year</a><a href="#" title="Custom" class="item-check">Custom</a></li>
+                        <li class="divider"></li>
+                        <li>
+                            <div>
+                                <button type="submit" class="btn btn-grey">Apply</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content">
+            <table width="100%">
+                <tbody>
+                <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col"><span class="text">Active View viewable impr</span></th>
+                    <th scope="col"><span class="text">Impression</span></th>
+                    <th scope="col"><span class="text">Avg. Cost</span></th>
+                    <th scope="col"><span class="text">Conversions</span></th>
+                    <th scope="col"><span class="text">Cost / conv.</span></th>
+                    <th scope="col"><span class="text">Cost</span></th>
+                </tr>
+                <tr>
+                    <td class="date-row split-v">May 9, 2016</td>
+                    <td class="split-v"><span class="text-color" style="color:#bdd630;">8,379,596</span><span
+                            class="text-bg green"><i class="icon-arr-top-green"></i>12.40%</span></td>
+                    <td class="split-v"><span class="text-color" style="color:#63c9d5;">79,596</span><span
+                            class="text-bg red"><i class="icon-arr-down-red"></i>12.40%</span></td>
+                    <td class="split-v"><span class="text-color-small" style="color:#df8485;">đ</span> <span
+                            class="text-color" style="color:#df8485;">593</span><span class="text-bg green"><i
+                            class="icon-arr-top-green"></i>90.10%</span></td>
+                    <td class="split-v"><span class="text-color" style="color:#fa9f1b;">234,234</span></td>
+                    <td class="split-v"><span class="text-color-small" style="color:#77c376;">đ</span> <span
+                            class="text-color" style="color:#77c376;">62,554</span></td>
+                    <td><span class="text-color-small" style="color:#3cada9;">đ</span> <span class="text-color"
+                                                                                             style="color:#3cada9;">37,110,476</span><span
+                            class="text-bg green"><i class="icon-arr-top-green"></i>300.10%</span></td>
+                </tr>
+                <tr>
+                    <td class="date-row noline split-v">May 8, 2016</td>
+                    <td class="noline split-v"><span class="text-color" style="color:#d9ea7a;">7,349,374</span></td>
+                    <td class="noline split-v"><span class="text-color" style="color:#a6dee5;">83,791</span></td>
+                    <td class="noline split-v"><span class="text-color-small" style="color:#e9babb;">đ</span> <span
+                            class="text-color" style="color:#e9babb;">593</span></td>
+                    <td class="noline split-v"><span class="text-color" style="color:#fabe6e;">123,123</span></td>
+                    <td class="noline split-v"><span class="text-color-small" style="color:#99e598;">đ</span> <span
+                            class="text-color" style="color:#99e598;">62,554</span></td>
+                    <td class="noline"><span class="text-color-small" style="color:#5fd2ce;">đ</span> <span
+                            class="text-color" style="color:#5fd2ce;">12,557,946</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="list-filter" style="display:none">
+    <div class="col-md-12 col-8">
+        <div class="customize-module">
+            <p class="title">Customize modules</p>
+            <div class="container-field full">
+                <div class="warning-component"><i class="icon-light"></i><span>Add your own customized modules by creating saved filters on the Line Item and Campaign tab!</span>
+                </div>
+            </div>
+            <p>Specify which modules you'd like to appear on your Home tab. These modules will also appear on
+                mobile.</p>
+            <div class="module">
+                <p><span class="text-left"><strong>Module</strong></span><span class="text-right"><strong>Show</strong></span>
+                </p>
+                <ul class="nice-scroll module-scroll">
+                    <li ng-repeat="custmodule in list_cust_module">
+                        <a href=""><i ng-class="custmodule.type > 1 ? 'icon-campaign-grey' : 'icon-lineitem-grey'"></i>{{custmodule.filter_name}}</a>
+                        <div style="position: absolute; right: 0; top: 9px;">
+                            <input ng-model="custmodule.is_widget" type="checkbox" ng-value="custmodule.filter_id"
+                                   class="custom-checkbox" value="{{custmodule.filter_id}}" style="">
+                            <label>Checkbox</label>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="btn-group-cus">
+                <button type="button" ng-click="updateCustomModule()" class="btn btn-green">Save</button>
+                <button type="button" ng-click="hideCustom()" class="btn btn-grey">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-8">
+    <div class="widget">
+        <div class="widget-header">
+            <h3><i class="icon-performance"></i>Performance Graph<a href=""><i class="icon-minimize-black"></i></a>
+            </h3>
+        </div>
+        <div class="widget-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="chart-performance"><img src="{{static_url}}/images/chart-performance-graph.png"
+                                                        width="1117"
+                                                        height="215" alt=""/></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+    <div class="col-md-6 col-8">
+        <div class="widget widget-device line-bottom">
+            <div class="widget-header">
+                <h3><i class="icon-device"></i>Devices<a href=""><i class="icon-minimize-black"></i></a></h3>
+            </div>
+            <div class="widget-content">
+                <div class="center-h">View by
+                    <div class="dropdown dropdown-viewable">
+                        <button type="button" class="btn btn-default">Viewable Impression<span class="caret"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="screen-device">
+                    <ul>
+                        <li><img src="{{static_url}}/images/img-mobile-device.png" width="19" height="33" alt=""> Mobile
+                        </li>
+                        <li><img src="{{static_url}}/images/img-tablet-device.png" width="28" height="36" alt=""> Tablet
+                        </li>
+                        <li><img src="{{static_url}}/images/img-desktop-device.png" width="36" height="29" alt="">
+                            Desktop
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+                <div class="chart-horizontal">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <th scope="row"><i class="icon-line-item"></i>BIG BANG TET</th>
+                            <td><img src="{{static_url}}/images/img-chart-horizontal-1.png" width="392" height="19"
+                                     alt=""></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><i class="icon-line-item"></i>BAT NGO LON - GIAM GIA LON</th>
+                            <td><img src="{{static_url}}/images/img-chart-horizontal-2.png" width="392" height="19"
+                                     alt=""></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><i class="icon-line-item"></i>GDN | Invesment</th>
+                            <td><img src="{{static_url}}/images/img-chart-horizontal-3.png" width="392" height="19"
+                                     alt=""></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><i class="icon-line-item"></i>GDN | Economic</th>
+                            <td><img src="{{static_url}}/images/img-chart-horizontal-4.png" width="392" height="19"
+                                     alt=""></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><i class="icon-line-item"></i>GDN | Science</th>
+                            <td><img src="{{static_url}}/images/img-chart-horizontal-5.png" width="392" height="19"
+                                     alt=""></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-8">
+        <div class="widget line-bottom">
+            <div class="widget-header">
+                <h3><i class="icon-location"></i>Location<a href=""><i class="icon-minimize-black"></i></a></h3>
+            </div>
+            <div class="widget-content"></div>
+        </div>
+    </div>
+</div>
+
+<div class="">
+    <div class="col-md-6 col-8" ng-repeat="subpanel in list_panel_module">
+        <modifycolumnhome idmodal="subpanel.filter_id" typecolumn="subpanel.type" objcolumn="13"></modifycolumnhome>
+        <div class="widget widget-filter line-bottom">
+            <div class="widget-header">
+                <h3>
+                    <i class="icon-line-dotted-double"></i>
+                    <i ng-class="subpanel.type > 1 ? 'icon-campaign-blue' : 'icon-lineitem-blue'"></i>{{subpanel.filter_name}}
+                    <a class="number" href="">(10)</a>
+                    <a href="" ng-click="removeWidget(subpanel.filter_id)"><i class="icon-close-black"></i></a>
+                    <a id="minimize-widget-{{subpanel.filter_id}}"
+                       ng-click="minimizeContent(subpanel.filter_id,subpanel.type,subpanel.expand)" href=""><i
+                            ng-class="subpanel.expand == true ? 'icon-minimize-black': 'icon-zoom-black'"></i></a>
+                    <i class="icon-line-dotted-single"></i>
+                    <a href="" ng-click="openModel(subpanel.filter_id)">
+                        <i class="icon-setting-black"></i>
+                    </a>
+                </h3>
+            </div>
+            <div id="widget-content-{{subpanel.filter_id}}"
+                 ng-class="subpanel.expand == true ? 'widget-content': 'hide'">
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <th class="header" scope="col">Campaign</th>
+                        <th class="header col-btn-left" scope="col"><a href=""><i class="icon-arr-left-grey"></i></a>
+                        </th>
+                        <th class="header" scope="col">Max. CPC</th>
+                        <th class="header" scope="col">Lineitem</th>
+                        <th class="header" scope="col">Interactions</th>
+                        <th class="header" scope="col">Interaction<br>rate</th>
+                        <th class="header" scope="col">Avg. CPC</th>
+                        <th class="header col-btn-right" scope="col"><a href=""><i class="icon-arr-right-grey"></i></a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href=""><strong>mass 1</strong></a></th>
+                        <td class="col-btn">&nbsp;</td>
+                        <td>₫ 1,500</td>
+                        <td class="col-lineitem"><a href="">BIG BANG TET</a></td>
+                        <td>44,640</td>
+                        <td>1.18 %</td>
+                        <td>₫ 484</td>
+                        <td class="col-btn">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href=""><strong>Topic</strong></a></th>
+                        <td class="col-btn">&nbsp;</td>
+                        <td>₫ 1,500</td>
+                        <td><a href="">GDN | Invesment</a></td>
+                        <td>6,411</td>
+                        <td>0.38 %</td>
+                        <td>₫ 940</td>
+                        <td class="col-btn">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href=""><strong>INTEREST</strong></a></th>
+                        <td class="col-btn">&nbsp;</td>
+                        <td>₫ 1,500</td>
+                        <td><a href="">BẤT NGỜ LỚN - GIẢM GIÁ LỚN</a></td>
+                        <td>4,786</td>
+                        <td>0.30 %</td>
+                        <td>₫ 952</td>
+                        <td class="col-btn">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href=""><strong>mass 2</strong></a></th>
+                        <td class="col-btn">&nbsp;</td>
+                        <td>₫ 1,500</td>
+                        <td><a href="">BIG BANG TET</a></td>
+                        <td>3,162</td>
+                        <td>0.17 %</td>
+                        <td>₫ 1,227</td>
+                        <td class="col-btn">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href=""><strong>PLACEMENT ALL</strong></a></th>
+                        <td class="col-btn">&nbsp;</td>
+                        <td>₫ 1,500</td>
+                        <td><a href="">BẤT NGỜ LỚN - GIẢM GIÁ LỚN</a></td>
+                        <td>1,785</td>
+                        <td>0.00 %</td>
+                        <td>₫ 0</td>
+                        <td class="col-btn">&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="wrap-table-footer">
+                    <a class="view-report" href="">View full report »</a>
+                    <div class="record-table"><span>Show </span>
+                        <div class="count">
+                            <select>
+                                <option>50</option>
+                                <option>100</option>
+                                <option>200</option>
+                            </select>
+                        </div>
+                        <span> rows</span>
+                        <span>1 - 6 of 6</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

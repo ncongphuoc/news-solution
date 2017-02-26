@@ -1,0 +1,189 @@
+<div class="left-block target-placement target-remarketing">
+    <h2>
+        <span class="text-dot">{{data_source.heading}}</span>
+        <span style="float: right"><a href="" ng-click="removeSelf(id)" ng-show="show_remove == true">x</a></span>
+    </h2>
+    <div class="inner">
+        <div class="border">
+            <div class="inner-left" style="width : 58% !important">
+                <!--<div class="heading" ng-show="count_data_source > 1">
+                    <select class="form-control" ng-model="affinity_current"
+                            ng-change="selectAffinity()">
+                        <option ng-repeat="affinity in data_source.config_data" value="{{affinity.key}}">{{affinity.value}}
+                        </option>
+                    </select>
+                </div>-->
+                <!--<div class="form-search">
+                    <input type="text" placeholder="Search by list name" class="form-control">
+                    <button type="submit"><i class="icon-search-grey"></i></button>
+                </div>-->
+                <div ng-include="getDropDownTemplate()"></div>
+                <div class="dropdown-dynamic" ng-show="affinity_current == target_remarketing && (+data_source.data.use_dynamic == 0) && !edit">
+                    <a href="" class="text-dynamic" ng-click="dynamic_collapsed = !dynamic_collapsed"
+                       ng-init="dynamic_collapsed = true"><i
+                            class="icon-arrow-grey " ng-class="{'active':!dynamic_collapsed}"></i><strong>Dynamic
+                        remarketing creatives</strong> -
+                        customers may be more likely to purchase
+                        <button type="button" class="icon-question-grey" data-toggle="tooltip" title=""
+                                data-original-title="Another one here too"></button>
+                    </a>
+                    <div class="form-group" uib-collapse="dynamic_collapsed">
+                        <div class="checkbox">
+                            <label>
+                                <input iCheck type="checkbox" class="icheck" ng-model="use_dynamic_remarketing" ng-change="changeUserDynamicRemarketing()">
+                                <span>Use dynamic remarketing creatives</span> </label>
+                        </div>
+                    </div>
+                    <hr class="dotted">
+                </div>
+
+                <div class="box-search-target-1">
+                    <div class="form-group form-search">
+                        <input type="text" placeholder="Search by related term or phrase"
+                               class="form-control" ng-model="search">
+                        <button type="submit"></button>
+                    </div>
+                </div>
+                <div class="box-search-target-2" style="display: none">
+                    <div class="form-group form-search">
+                        <input type="text" placeholder="Search by related term or phrase"
+                               class="form-control" ng-model="search">
+                        <button type="submit"></button>
+                    </div>
+                    <div class="dropdown" uib-dropdown is-open="false">
+                        <button type="button" class="btn btn-default" uib-dropdown-toggle>Existing campaigns<span
+                                class="caret"></span></button>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li><a href="">Display Network Only</a></li>
+                            <li><a href="">Display Network Only</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="wrap-table-left" ng-include="getTargetTemplate()"></div>
+                <div class="large_init loading" style="opacity: 0.8">
+                    <div class="loading-icon"></div>
+                </div>
+
+            </div>
+            <div class="inner-right">
+                <div class="total">Selected : {{total_affinity_output ? total_affinity_output : 0 | number}}</div>
+                <div class="wrap-table-right">
+                    <div class="right-content-target">
+                        <div class="scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions" ng-class="{'auto-height':+count_data_source > 1}">
+                            <div class="top-header"
+                                 ng-repeat-start="(key_affinity_output,affinity_output) in data_source.config_data"
+                                 ng-show="affinity_output.data.length">{{affinity_output.value}}: <strong><span>{{affinity_output.data.length | number}}</span></strong>
+                            </div>
+                            <div class="bottom" ng-repeat-end>
+                                <div class="inner-row" ng-repeat="affinity in affinity_output.data">
+                                    <span><i class="parent-name" ng-if="affinity.parent_name != undefined">{{affinity.parent_name}} »</i>{{affinity.object_name}}</span>
+
+                                    <a ng-click="removeObject(affinity,affinity_output.key)"
+                                       class="btn-close" ng-if="affinity.status == undefined" obid="{{affinity.object_id}}"></a>
+
+                                    <a ng-click="+affinity.status != 0 && removeObject(affinity,affinity_output.key)"
+                                       class="btn-close" ng-class="{disable:+affinity.status == 0}" ng-if="affinity.status != undefined" obid="{{affinity.object_id}}"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group-cus" ng-show="show_close">
+        <button type="button" class="btn btn-grey" ng-click="closeTarget(id)">Close</button>
+    </div>
+
+    <script type="text/ng-template" id="two_columns.html">
+        <div class="top-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4><strong>{{data_source.config_data[affinity_current].value}}: <span>{{target_left_total | number}}</span></strong></h4>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+        <div class="left-content-target">
+            <div class="scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions">
+
+                <ul-target targets='target_left' config="prepare_data" data='data_source.config_data' on-select-object="onSelectObject(target)"></ul-target>
+
+            </div>
+            <div class="large loading" id="loading_{{affinity_current}}" style="opacity: 0.8">
+                <div class="loading-icon"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="three_columns.html">
+        <div class="top-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4><strong>{{data_source.config_data[affinity_current].value}}: <span>{{target_left_total | number}}</span></strong><!--<a href=""><i class="icon-arr-top-grey"></i></a>--></h4>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-left"><strong>{{data_source.config_data[affinity_current].forecast_title}}</strong>
+                        <!--<button type="button" class="icon-question-grey" data-toggle="tooltip" title="" data-original-title="Another one here too"></button>-->
+                        <!--<a href=""><i class="icon-arr-top-grey"></i></a>--></h4>
+                </div>
+            </div>
+        </div>
+        <div class="left-content-target">
+            <div class="scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions"><!--<div class="nice-scroll" when-scroll-ends="loadMoreRecords(el)" style="max-height: 310px;">-->
+                <ul-target targets='target_left' config="prepare_data" data='data_source.config_data' on-select-object="onSelectObject(target)"></ul-target>
+            </div>
+            <div class="large loading" id="loading_{{affinity_current}}" style="opacity: 0.8">
+                <div class="loading-icon"></div>
+            </div>
+        </div>
+
+    </script>
+
+
+
+    <script type="text/ng-template" id="li.html">
+        <li ng-class="{'root-target':(target.parent_id == 0),'open':target.showed}">
+            <div class="target-parent" ng-class="{disable:target.checked}">
+                <div class="row">
+                    <div class="col-md-8"><a href="" data-toggle="collapse" ng-click="target.child && getListChild(target,$event)"
+                                             ><i class="icon-btn-close-blue" ng-class="{active:target.showed}" ng-show="target.child"></i>{{target.object_name}}</a></div>
+                    <div class="col-md-4">
+                        <span class="txt-three-col" ng-show="+config.target == 4 || +config.target == 1">{{target[data[config.target].forecast_id]}}</span>
+                        <a class="detail" ng-click="demographic({'target_id':target.object_id,'target_define':config.target})" ng-show="+config.target != 4 && +config.target != 1">Detail<i class="icon-note-blue"></i></a>
+                        <button type="button" class="btn-arrow" ng-click="handlingSelectObject(target)" ng-class="{active:target.checked}" obid="{{target.object_id}}"></button>
+                    </div>
+                </div>
+                <div class="loading">
+                    <div class="loading-icon"></div>
+                </div>
+            </div>
+        </li>
+    </script>
+
+    <script type="text/ng-template" id="uib_drop_down.html">
+        <div class="dropdown dropdown-interests-remarketing" uib-dropdown is-open="false"
+             ng-show="count_data_source > 1">
+            <button type="button" class="btn btn-default" uib-dropdown-toggle>
+                {{data_source.config_data[affinity_current].value}}<span class="caret"></span></button>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="affinity in config_data_array | sort:'value'">
+                    <a ng-class="{'text-disable-click':affinity.key == affinity_current}" href="" ng-click="affinity.key != affinity_current && selectAffinity(affinity.key)">{{affinity.value}}</a>
+                </li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/ng-template" id="drop_down_select.html">
+        <div class="arrow-down">
+            <select ng-model="affinity_current" ng-options="affinity.key as affinity.value for affinity in config_data_array | sort:'value'"
+                    ng-change="selectAffinity(affinity_current)"
+            ></select>
+        </div>
+    </script>
+</div>
+

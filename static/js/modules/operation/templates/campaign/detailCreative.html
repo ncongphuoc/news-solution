@@ -1,0 +1,44 @@
+<operations>
+    <div class="loading_page">
+        <div class="loading-icon"></div>
+        <div class="txt-loading">Loading ...</div>
+    </div>
+    <div class="heading-page">
+        <adx-campaign-breadcumb title="campaign_info.campaign_name"></adx-campaign-breadcumb>
+        <div class="dropdown pull-right cus-breadcrumb">
+            <adx-date-picker datepicker="datepicker()" params="datePicker" from_date="from_date"
+                             to_date="to_date"></adx-date-picker>
+        </div>
+    </div>
+    <campaign-top-menu></campaign-top-menu>
+    <div class="inner-content">
+        <div class="wrap-chart mb-25">
+            <div class="wrap-chart">
+                <div class="wrap-chart-left">
+                    <!-- Filter top -->
+                    <filtertop data="data_filter_top" filtertop="filterTop()" params="filter_top_params"></filtertop>
+                    <filter filter-params="filter_params" filter-options="filter_options" action="applyFilter()"></filter>
+
+                    <chart settings="chart"></chart>
+                </div>
+                <div class="wrap-chart-right">
+                    <campaigninfo campaign="campaign_params"></campaigninfo>
+                </div>
+            </div>
+        </div>
+        <filterbottom idmodalcolumn="idmodal" filter="filterChange()" params="filterParams" datasource="dataSource"
+                      typeItem="typeitem"></filterbottom>
+        <!--<input type="button" ng-click="enableModal()" value="Enable modal"/>
+        <input type="file" id="simpleUpload"/>-->
+        <adx-editor source="selectedObject" edit-type="editType" ng-show="show_change_bid"></adx-editor>
+        <labelmodal idmodallabel="idmodallabel" labeltype="labeltype"></labelmodal>
+        <label-grid source="selectedObject" type="" option="grid_options"></label-grid>
+        <div class="wrap-table table-responsive scroll">
+            <div class="loading_grid">
+                <div class="loading-icon"></div>
+                <div class="txt-loading">Loading ...</div>
+            </div>
+            <grid params="grid_params" grid-options="grid_options" ng-model-object="selectedObject"></grid>
+        </div>
+    </div>
+</operations>

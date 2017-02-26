@@ -1,0 +1,18 @@
+
+<div class="edit-item edit-item-date-range" ng-click="data.date_range_type != 13 && data.date_range != 'Custom' && showEdit()">
+    <span>{{data.date_range}}</span>
+    <!--click-anywhere-but-here="close()"-->
+    <a title="{{data.date_range}}" class="edit-text" style="cursor: pointer;" >
+        <i class=" hover-visible" ng-class="{'icon-pen-grey':(data.date_range_type != 13 && data.date_range != 'Custom')}"></i>
+    </a>
+</div>
+
+<div class="dropdown dropdown-grid-select" uib-dropdown style="display: none">
+    <button type="button" class="btn btn-default" uib-dropdown-toggle>
+        {{data.date_range}}<span class="caret"></span></button>
+    <ul class="dropdown-menu" uib-dropdown-menu>
+        <li class="has-check" ng-repeat="date_range in list_date_range" ng-if="date_range.object_id != 13 && date_range.object_name != 'Custom'">
+            <a href="" class="item-check" ng-click="selectDate(date_range)" ng-class="{checked: date_range.selected}">{{date_range.object_name}}</a>
+        </li>
+    </ul>
+</div>

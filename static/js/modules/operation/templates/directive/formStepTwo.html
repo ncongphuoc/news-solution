@@ -1,0 +1,146 @@
+<div class="heading-page">
+    <h1 class="title-2">Settings</h1>
+</div>
+<div class="inner-content">
+    <div class="create-campaign-2">
+        <div class="left-block-package">
+        <form name="package_form_step_2" novalidate>
+            <div class="lead-text1">LOCATION</div>
+            <p>Which locations do you want to target (or exclude) in your line item?</p>
+            <location-search ng-model="package.locations_search"
+                                location-list="package.locations_target"></location-search>
+            <span class="error" ng-show="is_error_location && is_error"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid location' | translate}}</span>
+            <hr class="dotted">
+
+            <div class="lead-text1">DEVICES</div>
+            <uib-accordion close-others="false">
+                <ul class="list-collapse narrow-top">
+                    <li class="clearfix">
+                        <uib-accordion-group ng-click="updateOpenStatus()"
+                                             heading="{{'Device: target device types, specific device settings.' | translate}}"
+                                             template-url="/js/modules/operation/templates/campaign/accordion.html">
+                            <device-target ng-model="package.device"
+                                           is-open="isOpenTarget"></device-target>
+                        </uib-accordion-group>
+                    </li>
+                </ul>
+            </uib-accordion>
+            <hr class="dotted">
+
+            <div class="lead-text1">CREATIVE SETTINGS</div>
+            <p>Placement, creative scheduling</p>
+            <select-multi form-name="remarketing_form"
+                            config="config_type_of_visitor_specific_tag"
+                            ng-model="package.placement"
+                            url-template="/js/modules/operation/templates/directive/creativeSetting.html">
+            </select-multi>
+            <span class="error" ng-show="is_error_placement && is_error"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid placement' | translate}}</span>
+
+            <div class="scheduling">
+                <div>Creative scheduling</div>
+                <adx-advance-time-setting ng-model="package.create_scheduling"
+                    time-frames="package.create_scheduling.time_frames"></adx-advance-time-setting>
+            </div>
+            <span class="error" ng-show="is_error_scheduling && is_error"><span class="ic-note"><i class="ic-ants ic-ants-64"></i></span>{{'Invalid scheduling' | translate}}</span>
+
+            <hr class="dotted">
+            <uib-accordion close-others="false">
+                <ul class="list-collapse">
+                    <li>
+                        <uib-accordion-group heading="{{'Dynamic Line Item settings' | translate}}"
+                                             template-url="/js/modules/operation/templates/campaign/accordion.html">
+                            <div class="form-group form-package1">
+                                <label class="label-field"><span class="text-dot" translate="Use dynamic creatives">Use dynamic creatives</span></label>
+                                <div class="container-field">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                    class="icheck"
+                                                    ng-model="package.use_dynamic"
+                                                    ng-value="1"
+                                                    ng-true-value="1"
+                                                    ng-false-value="0">
+                                            <span>{{'People will get different creatives based on the products or services they viewed on your site.' | translate}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-accordion-group>
+                    </li>
+                    <li>
+                        <uib-accordion-group
+                                heading="{{'Creative delivery: frequency capping' | translate}}"
+                                template-url="/js/modules/operation/templates/campaign/accordion.html">
+                                <creative-delivery ng-model="package.create_delivery"></creative-delivery>
+                        </uib-accordion-group>
+                    </li>
+                </ul>
+            </uib-accordion>
+
+            <hr>
+            <div class="clearfix">
+                <div class="split-v">
+                    <button type="button" class="btn btn-grey" ng-click="back()"><i class="icon-arr-back"></i>Back</button>
+                </div>
+                <div class="split-v">
+                    <button type="button" class="btn btn-grey" ng-click="submitStepTwo()">Continue<i class="icon-arrow-right"></i></button>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="right-block-package">
+            <!-- <div class="top-heading">
+                <p class="text"><span style="color:#bdd630">400K - 450K</span>Impressions/ week</p>
+                <p class="blood"><span style="background-color:#bdd630; width:75%"></span></p>
+                <p class="specific"><span class="pull-left">SPECIFIC</span><span class="pull-right">BROAD</span></p>
+            </div>
+            <div class="body">
+                <div style="background-color:#ffdd00" class="circle circle-R"></div>
+                <div style="background-color:#e37e7e" class="circle circle-L"></div>
+                <p><strong>Targeting methods</strong></p>
+                <p><span style="background-color:#f1bebe" class="circle-sm"></span>Location & Devices</p>
+                <p><span style="background-color:#ffee7f" class="circle-sm"></span>Placements</p>
+            </div> -->
+            <forecast ng-model="forecast_data"></forecast>
+        </div>
+    </div>
+    <script type="text/ng-template" id="advance-time-setting.html">
+        <div>
+            <img ng-src="{{static_url}}/images/upload/img-grid.jpg" alt="">
+            <a href="" ng-click="showAdvance()" class="btn btn-link">Edit</a>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="advance-time-setting-popup.html">
+        <div class="modal-dialog popup-dropdown-menu popup-brand-4">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="scheduling-board">
+                        <table cellspacing="2" ng-init="range = 0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" ng-model="isCheckAll" ng-change="checkAll()" class="icheck">
+                                </td>
+                                <td ng-repeat="hour in arrHour"><a ng-click="toggleAllHour($index)" href=""
+                                                                   title="Check all">{{hour}}</a></td>
+                            </tr>
+                            <tr ng-repeat="date in arrDay">
+                                <td><a href="" ng-click="toggleAllDay($index)">{{date}}</a></td>
+                                <td ng-repeat="hour in arrHour" ng-click="toggleHour(arrParent[$parent.$index], $index)"
+                                    ng-class="{checked: arrValue[arrParent[$parent.$index]][$index]['checked']}">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-green" ng-if="!readOnly" ng-click="save()">Save</button>
+                    <button type="button" class="btn btn-grey" data-dismiss="modal" ng-click="close()">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </script>
+</div>

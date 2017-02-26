@@ -1,0 +1,337 @@
+<table class="table table-bordered table-campaign-ad" id="listing" ng-show="data_source.column_defs.length">
+    <thead sticky-header scroll-body="#listing" scroll-stop="52" >
+    <tr>
+        <th style="width: 50px" rowspan="2" >
+            <input iCheck type="checkbox" class="icheck" ng-model="selected_all" ng-change="selectedAll()">
+        </th>
+        <th
+                ng-repeat="columns in data_source.column_defs"
+                class="{{columns.class_head}}"
+                ng-class="[
+                {'hight-light': columns.name == params.sort},
+                {'has-sort':columns.name == params.sort},
+                {'text-right': columns.type > 1 && !columns.is_compare},
+                {'text-center': columns.is_compare},
+                {'pl-30': +columns.is_performance == 1},
+                {'pr-30': columns.name == params.sort && !columns.is_compare}
+                ]"
+                rowspan="{{+columns.is_performance == 1 && columns.is_compare ? '1' : '2' }}"
+                colspan="{{columns.is_compare ? '4' : '' }}"
+        >
+
+            <a ng-click="getCompare(columns)" ng-show="(+columns.is_performance) == 1 && params.from_range != undefined && params.from_range != '' && params.to_range != undefined && params.to_range != '' ">
+                <i class="icon-close-blue-min" ng-class="{active:columns.is_compare}" style="cursor: pointer"></i>
+            </a>
+            <!--changePage($event,1,params.limit, columns.name)-->
+            <span ng-class="{'text-dot':columns.enableSorting}" aria-sort="" ng-click="columns.enableSorting && sort($event, columns.name)">{{columns.header}}</span>
+            <i ng-show="columns.name == params.sort && !columns.is_compare" ng-class="class_arrow"></i>
+        </th>
+    </tr>
+    <tr>
+        <th ng-repeat-start="columns in data_source.column_defs" class="text-right pr-30" ng-class="{'active-bg':(columns.name == params.sort && !params.sort_cp)}" ng-show="columns.is_compare">
+            <span aria-sort="" ng-click="columns.enableSorting && sort($event, columns.name)" style="cursor: pointer;display: block;">{{params.from_date}}<br>{{params.to_date}}</span>
+            <a class="arr-blue"><i ng-show="columns.name == params.sort && !params.sort_cp" class="icon-arr-top-blue" ng-class="{active:params.az == 'DESC'}"></i></a>
+        </th>
+        <th class="text-right pr-30" ng-class="{'active-bg':(columns.name == params.sort && params.sort_cp)}" ng-show="columns.is_compare">
+            <span aria-sort="" ng-click="columns.enableSorting && sort($event, columns.name,1)" style="cursor: pointer;display: block;">{{params.from_range}}<br>{{params.to_range}}</span>
+            <a class="arr-blue"><i ng-show="columns.name == params.sort && params.sort_cp" class="icon-arr-top-blue" ng-class="{active:params.az == 'DESC'}"></i></a>
+        </th>
+        <th class="text-right" ng-show="columns.is_compare">Change</th>
+        <th ng-repeat-end class="text-right" ng-show="columns.is_compare">Change (%)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr dir-paginate-start="(index_row,data) in data_source.data | itemsPerPage: params.limit" total-items="data_source.total"
+        current-page="params.page" ng-class="{'text-grey': getClassByRow(data),'bg-select':data.selected}"><!--text-grey hight-light pagination.current-->
+        <td style="min-width: 10px">
+
+            <div style="position: absolute">
+                <input type="checkbox" ng-value="data[grid_options.row_key]" ng-click="checkChecbox(0,0)"
+                       class="custom-checkbox" ng-model="data.selected">
+                <label>Checkbox</label>
+            </div>
+        </td>
+        <!--<td>
+            <div class="custom-switch">
+                <input type="checkbox" id="switch-{{data[grid_options.row_key]}}">
+                <label for="switch-{{data[grid_options.row_key]}}"></label>
+            </div>
+        </td>-->
+        <td ng-repeat-start="columns in data_source.column_defs" class="{{columns.name.toLowerCase()}}"
+            ng-class="{'text-right': columns.type > 1 && columns.name.toLowerCase() != 'label_name'}"
+            ng-switch on="columns.name.toLowerCase()">
+            <div ng-switch-when="lineitem_name">
+                <link-grid type="grid_options.type" data="data" disable-edit="data.status_id==80||data.status_id==0" option="grid_options" index="index_row" column-name="columns.name.toLowerCase()"></link-grid>
+            </div>
+            <div ng-switch-when="campaign_name">
+                <link-grid type="grid_options.type" data="data" disable-edit="data.status_id==80||data.status_id==0" option="grid_options" index="index_row"  column-name="columns.name.toLowerCase()"></link-grid>
+            </div>
+            <div ng-switch-when="creative_name" class="feature-image">
+                <a href="" ui-sref="campaigns.creative.edit({creative_id:data['creative_id'], view_by: view_by})"><i class="icon-pen-border-blue"></i></a>
+                <a ng-click="loadPreviewAd(data['creative_id'])" class="btn"><i
+                        ng-click="loadPreviewAd(data['creative_id'])" class="edit-text icon-search-border-blue"></i></a>
+                <popupreview data="data" creativeid="data['creative_id']"
+                             imgsrc="buildColumnCreativeName(data['files'],data['format'],data['creative_id'])"
+                             creativeformat="data['format']" heightcreative="data['height']"
+                             widthcreative="data['width']" creativename="data['creative_name']"></popupreview>
+                <reviewad width="data['width']" height="data['height']" creativeid="data['creative_id']"
+                          imgsrc="buildColumnCreativeName(data['files'],data['format'],data['creative_id'])"
+                          creativeformat="data['format']"></reviewad>
+                <!--<img ng-src="{{st_url_upload}}/{{buildColumnCreativeName(data['files']).file[0].url}}" alt=""
+                     style="max-width: 50%">-->
+                <creativename data="data" columnname="columns.name.toLowerCase()"></creativename>
+
+            </div>
+            <div ng-switch-when="label_name">
+                <div ng-switch on="grid_options.type">
+                    <div ng-switch-when="0">
+
+                        <div class="edit-item">
+                            <span class="color" style="background-color:{{data['color']}}"></span>
+                            <a href="" class="open-modal-edit" data-label-id="{{data['label_id']}}" data-type="1" title=""><strong>{{data[columns.name.toLowerCase()]}}</strong></a>
+                            <a href=""  data-label-id="{{data['label_id']}}" data-type="1" class="edit-text open-modal-edit"><i
+                                    class="icon-pen-grey hover-visible"></i></a>
+                            <div id="label_name_{{data['label_id']}}" class="lable-edit-text" style="display:none">
+                                <input id="input_label_name_{{data['label_id']}}" type="text"
+                                       placeholder="{{data[columns.name.toLowerCase()]}}"
+                                       value="{{data[columns.name.toLowerCase()]}}" class="form-control"/>
+
+                                <div class="wrap-btn-create">
+                                    <button type="button" data-label-id="{{data['label_id']}}" data-type="1"
+                                            class="btn btn-green save-modal-edit-label">Save
+                                    </button>
+                                    <button  type="button" data-label-id="{{data['label_id']}}" data-type="1"
+                                            class="btn btn-grey close-modal-edit-label">Cancel
+                                    </button>
+                                </div>
+                                <span class="error" style="display:none" id="label_error_{{data['label_id']}}">This label name already exist</span>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="aw-label-background-div" id="label-bg-color"
+                              style="background-color:{{data['color']}};height: 13px;width: 13px;margin-right: 5px;display: inline-block;float: left;"></div>
+                         <span class="name" style="max-width: 50%">{{data[columns.name.toLowerCase()]}}</span>-->
+                        <!-- <div class="aw-label-background-div" id="label-bg-color"
+                              style="background-color:{{data['color']}};height: 13px;width: 13px;margin-right: 5px;display: inline-block;float: left;"></div>-->
+
+                    </div>
+                    <div ng-switch-default>
+                        <div class="lable-item">
+                            <renderlabel datalabel="data" gridtype="grid_options.type"
+                                         classlabel="classlabel"></renderlabel>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="label_description">
+                <div class="edit-item">
+                    <a href="" data-label-id="{{data['label_id']}}" data-type="2" class="open-modal-edit" title=""><strong>{{data[columns.name.toLowerCase()]}}</strong></a>
+                    <a href="" data-label-id="{{data['label_id']}}" data-type="2" class="edit-text open-modal-edit"><i
+                            class="icon-pen-grey hover-visible"></i></a>
+                    <div id="label_description_{{data['label_id']}}" class="lable-edit-text" style="display:none">
+                        <input id="input_label_description_{{data['label_id']}}" type="text"
+                               placeholder="{{data[columns.name.toLowerCase()]}}"
+                               value="{{data[columns.name.toLowerCase()]}}" class="form-control"/>
+                        <div class="wrap-btn-create">
+                            <button data-label-id="{{data['label_id']}}" data-type="2" type="button" class="btn btn-green save-modal-edit-label">
+                                Save
+                            </button>
+                            <button  data-label-id="{{data['label_id']}}" data-type="2"  type="button" class="btn btn-grey close-modal-edit-label">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="cpm_bid_price">
+                <change-bid type="grid_options.type" data="data" column-name="columns.name.toLowerCase()" ng-click="data[columns.name.toLowerCase()] != '--' && showChangBid(data)"></change-bid>
+            </div>
+            <div ng-switch-when="cpc_bid_price">
+                <change-bid type="grid_options.type" data="data" column-name="columns.name.toLowerCase()" ng-click="data[columns.name.toLowerCase()] != '--' && showChangBid(data)"></change-bid>
+            </div>
+            <div ng-switch-when="total_budget" style="white-space: nowrap">
+                {{data['budget'] ? (data['budget'] | number) : 0}} ₫
+            </div>
+            <div ng-switch-when="audience_name">
+                <multi-value type="grid_options.type" data="data" column-name="columns.name.toLowerCase()"
+                config="[{view_id:'audience_category_name'},{view_id:'audience_name'}]"></multi-value>
+            </div>
+            <div ng-switch-when="full_name">
+                <link-grid type="grid_options.type" data="data" option="grid_options" column-name="columns.name.toLowerCase()"></link-grid>
+            </div>
+            <div ng-switch-when="report_name">
+                <link-grid type="grid_options.type" data="data" option="grid_options"
+                           column-name="columns.name.toLowerCase()" index="index_row"></link-grid>
+            </div>
+            <div ng-switch-when="remarketing_name">
+                <link-grid type="grid_options.type" data="data" option="grid_options" disable-edit="true"
+                           column-name="columns.name.toLowerCase()" index="index_row"></link-grid>
+            </div>
+
+            <div ng-switch-when="date_range_type">
+                <grid-select-date-range type="grid_options.type" data="data" index="index_row" option="grid_options" metric-id="columns.metric_id"
+                           column-name="columns.name.toLowerCase()"></grid-select-date-range>
+            </div>
+            <div ng-switch-when="status">
+                <div class="select-grid">
+                    <grid-select type="grid_options.type" data="data" index="index_row" option="grid_options" metric-id="columns.metric_id"
+                                 column-name="columns.name.toLowerCase()"></grid-select>
+                </div>
+
+            </div>
+            <div ng-switch-when="rm_type">
+                <multi-value type="grid_options.type" data="data" column-name="columns.name.toLowerCase()"
+                             config="[{view_id:'rm_type_parent'},{view_id:'rm_type'},{view_id:'shared'}]"></multi-value>
+            </div>
+
+            <div ng-switch-when="duration">
+                <multi-value type="grid_options.type" data="data" column-name="columns.name.toLowerCase()"
+                             config="[{view_id:'duration'}]" str-extend="'day'"></multi-value>
+            </div>
+
+            <span ng-switch-default ng-switch on="columns.type">
+                <span ng-switch-when="1">
+                    <span>{{data[columns.name.toLowerCase()]}}</span>
+                </span>
+                <span ng-switch-when="2">
+                    <span ng-switch on="grid_options.type">
+                        <span ng-if="data[columns.name.toLowerCase()] != 0">
+                            <span ng-switch-when="0">
+                                <a class="label-go-link" data-column-name="{{columns.name.toLowerCase()}}" data-label-id="{{data.label_id}}" href="javascript:void(0)"><span
+                                        class="txt-color"><strong>{{data[columns.name.toLowerCase()] | number}}</strong></span></a>
+                            </span>
+                            <span ng-switch-default>
+                                {{data[columns.name.toLowerCase()] | number}}
+                            </span>
+                        </span>
+                        <span ng-if="data[columns.name.toLowerCase()] == 0">
+                            <span ng-switch-default style="white-space: nowrap">{{data[columns.name.toLowerCase()] | number}}</span>
+                        </span>
+                    </span>
+                </span>
+                <span ng-switch-when="3" style="white-space: nowrap">{{data[columns.name.toLowerCase()] ? (data[columns.name.toLowerCase()] | number) : 0 }} %</span>
+                <span ng-switch-when="4">
+                    {{data[columns.name.toLowerCase()] != undefined ? (data[columns.name.toLowerCase()] | number) + ' ₫' : 0 + ' ₫' }}
+                 </span>
+                <span ng-switch-when="5" style="white-space: nowrap">{{data[columns.name.toLowerCase()] ? (parseStringToDate(data[columns.name.toLowerCase()]) | date:'dd/MM/yyyy') : '--'}}</span>
+            </span>
+        </td>
+        <!--compare-->
+        <td ng-show="list_field_compare.indexOf(columns.name.toLowerCase()) != -1">
+            <span ng-switch on="columns.type" ng-if="columns.name.toLowerCase() !== grid_options.columns_show_option">
+                 <span ng-switch-when="1">
+                    {{data.data_compare[columns.name.toLowerCase()]}}
+                </span>
+                <span ng-switch-when="2" style="white-space: nowrap">{{data.data_compare[columns.name.toLowerCase()] != undefined  ? (data.data_compare[columns.name.toLowerCase()] | number) : (columns.is_performance == 1 ? ('' | number) : '')}}</span>
+                <span ng-switch-when="3" style="white-space: nowrap">{{data.data_compare[columns.name.toLowerCase()] != undefined ? (data.data_compare[columns.name.toLowerCase()] | number) + ' %' : (columns.is_performance == 1 ? ('' | number) + ' %' : '')}} </span>
+                <span ng-switch-when="4" style="white-space: nowrap">{{data.data_compare[columns.name.toLowerCase()] != undefined  ? (data.data_compare[columns.name.toLowerCase()] | number) + ' ₫' : (columns.is_performance == 1 ? ('' | number) + ' ₫' : '')}} </span>
+                <span ng-switch-when="5" style="white-space: nowrap">{{data.data_compare[columns.name.toLowerCase()] != undefined ? parseStringToDate(data.data_compare[columns.name.toLowerCase()]) : '' | date:'dd/MM/yyyy'}}</span>
+            </span>
+        </td>
+        <td ng-show="list_field_compare.indexOf(columns.name.toLowerCase()) != -1">
+            {{(data[columns.name.toLowerCase()] - data.data_compare[columns.name.toLowerCase()]) | number}}
+        </td>
+        <td ng-repeat-end ng-show="list_field_compare.indexOf(columns.name.toLowerCase()) != -1">
+
+            {{(((data[columns.name.toLowerCase()] - data.data_compare[columns.name.toLowerCase()])/data.data_compare[columns.name.toLowerCase()]) * 100).isNaN() ?
+            0 : (((data[columns.name.toLowerCase()] - data.data_compare[columns.name.toLowerCase()])/data.data_compare[columns.name.toLowerCase()]) * 100) | number:2}} %
+        </td>
+
+    </tr>
+
+    <tr dir-paginate-end ng-repeat="(index_segment,segment) in data.segment | orderBy:+'day' " ng-if="data.segment"
+        class="text-grey bg-grey">
+        <td>
+        </td>
+        <td ng-repeat-start="columns in data_source.column_defs" ng-class="{'text-right': columns.type > 1}" >
+            <span ng-switch on="columns.type" ng-if="columns.name.toLowerCase() !== grid_options.columns_show_option">
+                 <span ng-switch-when="1">
+                    {{segment[columns.name.toLowerCase()]}}
+                </span>
+                <span ng-switch-when="2" style="white-space: nowrap">{{segment[columns.name.toLowerCase()] != undefined  ? (segment[columns.name.toLowerCase()] | number) : (columns.is_performance == 1 ? ('' | number) : '')}}</span>
+                <span ng-switch-when="3" style="white-space: nowrap">{{segment[columns.name.toLowerCase()] != undefined ? (segment[columns.name.toLowerCase()] | number) + ' %' : (columns.is_performance == 1 ? ('' | number) + ' %' : '')}}</span>
+                <span ng-switch-when="4" style="white-space: nowrap">{{segment[columns.name.toLowerCase()] != undefined  ? (segment[columns.name.toLowerCase()] | number) + ' ₫' : (columns.is_performance == 1 ? ('' | number) + ' ₫' : '')}} </span>
+                <span ng-switch-when="5" style="white-space: nowrap">{{segment[columns.name.toLowerCase()] != undefined ? parseStringToDate(segment[columns.name.toLowerCase()]) : '' | date:'dd/MM/yyyy'}}</span>
+            </span>
+            <span ng-if="columns.name.toLowerCase() == grid_options.columns_show_option">
+                {{segment[data_source.segment_key]}}
+            </span>
+        </td>
+
+        <!--compare-->
+        <td ng-show="list_field_compare.indexOf(columns.name.toLowerCase()) != -1">
+            <span ng-switch on="columns.type" ng-if="columns.name.toLowerCase() !== grid_options.columns_show_option">
+                 <span ng-switch-when="1">
+                    {{data.data_compare.segment[index_segment][columns.name.toLowerCase()]}}
+                </span>
+                <span ng-switch-when="2" style="white-space: nowrap">{{data.data_compare.segment[index_segment][columns.name.toLowerCase()] != undefined  ? (data.data_compare.segment[index_segment][columns.name.toLowerCase()] | number) : (columns.is_performance == 1 ? ('' | number) : '')}}</span>
+                <span ng-switch-when="3" style="white-space: nowrap">{{data.data_compare.segment[index_segment][columns.name.toLowerCase()] != undefined ? (data.data_compare.segment[index_segment][columns.name.toLowerCase()] | number) : (columns.is_performance == 1 ? ('' | number) : '')}} %</span>
+                <span ng-switch-when="4" style="white-space: nowrap">{{data.data_compare.segment[index_segment][columns.name.toLowerCase()] != undefined  ? (data.data_compare.segment[index_segment][columns.name.toLowerCase()] | number) : (columns.is_performance == 1 ? ('' | number) : '')}} ₫</span>
+                <span ng-switch-when="5" style="white-space: nowrap">{{data.data_compare.segment[index_segment][columns.name.toLowerCase()] != undefined ? parseStringToDate(data.data_compare.segment[index_segment][columns.name.toLowerCase()]) : '' | date:'dd/MM/yyyy'}}</span>
+            </span>
+            <!--{{data.data_compare.segment[index_segment][columns.name.toLowerCase()]}}-->
+        </td>
+        <td ng-show="list_field_compare.indexOf(columns.name.toLowerCase()) != -1">
+            {{(segment[columns.name.toLowerCase()] - data.data_compare.segment[index_segment][columns.name.toLowerCase()]) | number}}
+        </td>
+        <td ng-repeat-end ng-show="list_field_compare.indexOf(columns.name.toLowerCase()) != -1">
+            {{(((data[columns.name.toLowerCase()] - data.data_compare[columns.name.toLowerCase()])/data.data_compare[columns.name.toLowerCase()]) * 100).isNaN() ?
+            0 : (((data[columns.name.toLowerCase()] - data.data_compare[columns.name.toLowerCase()])/data.data_compare[columns.name.toLowerCase()]) * 100) | number:2}} %
+        </td>
+
+
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="total_bottom_grid" ng-if="data_source.data.length">
+        <td></td>
+
+        <td ng-repeat="columns in data_source.column_defs" ng-class="{'text-right': columns.type > 1}" colspan="{{columns.is_compare ? '4' : '' }}">
+            <div ng-if="columns.name.toLowerCase() == grid_options.columns_show_option">
+                Total - all {{grid_options.grid_name}}
+            </div>
+            <div ng-switch on="columns.type" ng-if="columns.name.toLowerCase() !== grid_options.columns_show_option && +columns.is_performance == 1">
+                <span ng-switch-when="2" style="white-space: nowrap">{{data_source.total_column[columns.name.toLowerCase()] ? (data_source.total_column[columns.name.toLowerCase()] | number) : 0}}</span>
+                <span ng-switch-when="3" style="white-space: nowrap">{{data_source.total_column[columns.name.toLowerCase()] ? (data_source.total_column[columns.name.toLowerCase()] | number) : 0}} %</span>
+                <span ng-switch-when="4" style="white-space: nowrap">{{data_source.total_column[columns.name.toLowerCase()] ? (data_source.total_column[columns.name.toLowerCase()] | number) : 0}} ₫</span>
+                <span ng-switch-default style="white-space: nowrap">{{data_source.total_column[columns.name.toLowerCase()] ? (data_source.total_column[columns.name.toLowerCase()] | number) : 0}}</span>
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="data_source.data.length">
+        <td colspan="{{data_source.column_defs.length + (list_field_compare.length * 3) + 2}}">
+            <div class="wrap-table-footer" ng-if="data_source.data">
+                <div class="record-table"><span>Show rows</span>
+                    <div class="count">
+                        <select ng-model="params.limit" ng-options="page for page in grid_options.pagination_page_sizes"
+                        ng-change="setItemPerPage()"
+                        >
+
+                        </select>
+                    </div>
+        <span>{{start}} - {{end}} of {{data_source.total}}
+        </span>
+
+                    <dir-pagination-controls boundary-links="true"
+                                             on-page-change="changePage(newPageNumber)"
+                                             template-url="/js/shared/templates/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+<div class="wrap-table-footer" ng-if="!data_source.data.length">
+    <div ng-switch on="grid_options.type">
+        <div ng-switch-when='0'>
+            {{"Text_No_Label_Found" | translate}}
+        </div>
+        <div ng-switch-default>
+            {{message_no_data}}
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,8 @@
+<div class="preview-creative" style="width: 300px; height: {{resizeHeight}}px; max-height: {{maxheight}}px; max-width: {{maxwidth}}px;">
+    <img ng-if="showReview && $parent.index_row >= 3" ng-src="{{static_url}}/images/upload/no-image-ants.jpg" class="img-placeholder" data-iframe="{{urlReview}}"
+         data-style="position: relative; border: none; transform: scale({{scale_div}});-webkit-transform: scale({{scale_div}}); -moz-transform:scale({{scale_div}}); transform-origin: left top; top: -15px; left: 0px;"
+         height="{{setheight}}" width="{{widthReview}}" data-height="{{setheight}}" data-width="{{widthReview}}"/>
+    <iframe ng-if="showReview && $parent.index_row < 3" ng-src="{{urlReview}}" style="position: relative; border: none; transform: scale({{scale_div}});-webkit-transform: scale({{scale_div}}); -moz-transform:scale({{scale_div}}); transform-origin: left top; top: -15px; left: 0px;" height="{{setheight}}" width="{{widthReview}}"></iframe>
+    <img style="max-width: 300px; max-height: {{resizeHeight}}px" ng-if="showImage" ng-src="{{urlImage}}"  />
+
+</div>

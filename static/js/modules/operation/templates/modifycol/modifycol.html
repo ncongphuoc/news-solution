@@ -1,0 +1,227 @@
+<style>
+    .hide{
+        display:none;
+    }
+</style>
+<div id="{{idmodal}}" data-backdrop="static" class="modify-column modal fade" tabindex='-1'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="" ng-click="functionCancel()"><i class="icon-close">X</i></a>
+                <h4 class="modal-title">Modify Columns</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <thead>
+                    <tr>
+                        <td>Select metrics</td>
+                        <td>
+                            <div class="search-filter pull-left">
+                                    <input ng-model="txtSearch" ng-keypress="keyEvent($event)" type="text" placeholder="Find modify columns">
+                                    <button ng-click="searchMod()" type="button"><i class="icon-search"></i></button>
+
+                            </div>
+                            <button id="add_all" type="button" class="btn btn-link pull-right" ng-click="addLeft(currentMetric,4)">Add all
+                                columns
+                            </button>
+                            <button id="remove_all" style="display:none" type="button" class="btn btn-link pull-right" ng-click="addLeft(currentMetric,5)">Remove all
+                                columns
+                            </button>
+
+                        </td>
+                        <td>Drag and drop to reorder <strong>{{modifyLength}}</strong></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <ul class="list-prop">
+                                <li ng-repeat="metric in metricparent" ng-click="addLeft(metric.metric_id,1)"
+                                    class="{{metric.classItem}}">
+                                    <a
+                                            style="cursor: pointer">{{metric.metric_name}}<span>&raquo;</span></a></li>
+
+                            </ul>
+                        </td>
+                        <td colspan="2" class="custom_metric" style="display: none">
+                            <div class="add-custom-column">
+                                <div class="breadcrumbs">Custom columns&nbsp;&raquo;&nbsp;<strong>Add custom
+                                    column</strong></div>
+                                <form action="#">
+                                    <div class="inner">
+                                        <div class="half-left">
+                                            <label for="column-name">Column name</label>
+                                            <input ng-model="form_metric.custom_metric_name" type="text">
+                                            <span ng-show="showErrorNameCustomMetric"
+                                                  style="color:red">{{errorMessage}}</span><br>
+                                        </div>
+                                        <div class="half-right">
+                                            <label for="column-name">Column description <span>(optional)</span></label>
+                                            <input ng-model="form_metric.custom_metric_description" type="text">
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="full-block">
+                                            <label>Formular</label>
+                                            <div class="inner-full-block">
+                                                <div class="dropdown split-v">
+                                                    <div class="dropdown dropdown-1" uib-dropdown>
+                                                        <button type="button" data-toggle="my-dropdown"
+                                                                class="btn btn-default" uib-dropdown-toggle>
+                                                            Select<span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" uib-dropdown-menu>
+                                                            <li ng-repeat-start="item in metric_parent"
+                                                                ng-class="{'dropdown-submenu':item.child}">
+                                                                <a href
+                                                                   ng-click="!item.child ? changeFilter(index_list_filter,item):''"
+                                                                   title="{{item.metric_name}}">{{item.metric_name}}</a>
+                                                                <ul class="dropdown-menu" ng-if="item.child">
+                                                                    <!--ng-if="item.child.length"-->
+                                                                    <li ng-repeat="subItem in item.child">
+                                                                        <a href
+                                                                           ng-click="addCustomMetricItem(subItem.metric_name,2,subItem.metric_code)">{{subItem.metric_name}}</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="divider" ng-repeat-end></li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <button ng-click="addCustomMetricItem('+',1,'+')" type="button"
+                                                        class="big-font btn btn-default">+
+                                                </button>
+                                                <button ng-click="addCustomMetricItem('-',1,'-')" type="button"
+                                                        class="big-font btn btn-default">-
+                                                </button>
+                                                <button ng-click="addCustomMetricItem('*',1,'*')" type="button"
+                                                        class="big-font btn btn-default">&times;</button>
+                                                <button ng-click="addCustomMetricItem('/',1,'/')" type="button"
+                                                        class="big-font btn btn-default">÷
+                                                </button>
+                                                <button ng-click="addCustomMetricItem('(',1,'(')" type="button"
+                                                        class="big-font btn btn-default">(
+                                                </button>
+                                                <button ng-click="addCustomMetricItem(')',1,')')" type="button"
+                                                        class="big-font btn btn-default mr-150">)
+                                                </button>
+                                                <div class="dropdown pull-right" uib-dropdown="">
+                                                    <button type="button" uib-dropdown-toggle="" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">{{currentForumla}}<span class="caret"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <!-- ngRepeat: item in dataSource.columns.current -->
+                                                        <li ng-repeat="item in dataFormulaType"
+                                                            class="ng-scope">
+                                                            <a ng-click="changeForumlaType(item.text,item.type)"
+                                                               class="ng-binding">{{item.text}}</a>
+                                                        </li><!-- end ngRepeat: item in dataSource.columns.current -->
+                                                        <li class="divider"></li>
+
+                                                    </ul>
+                                                </div>
+                                                <hr>
+
+                                                <!--Content Formula -->
+                                                <div id="content-formula"
+                                                     ng-repeat="contentF in contentFormula track by $index">
+                                                    <div ng-switch="contentF.itemType">
+                                                        <div class="dropdown" ng-switch-when="2">
+                                                            <div class="dropdown dropdown-1" uib-dropdown>
+                                                                <button type="button" data-toggle="my-dropdown"
+                                                                        class="btn btn-default" uib-dropdown-toggle>
+                                                                    {{contentF.itemName}}<span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu" uib-dropdown-menu>
+                                                                    <li ng-repeat-start="item in metric_parent"
+                                                                        ng-class="{'dropdown-submenu':item.child}">
+                                                                        <a href
+                                                                           ng-click="!item.child ? changeFilter(index_list_filter,item):''"
+                                                                           title="{{item.metric_name}}">{{item.metric_name}}</a>
+                                                                        <ul class="dropdown-menu" ng-if="item.child">
+                                                                            <!--ng-if="item.child.length"-->
+                                                                            <li ng-repeat="subItem in item.child">
+                                                                                <a href
+                                                                                   ng-click="updateCustomMetricItem(subItem.metric_name, 2, subItem.metric_code, $parent.$parent.$parent.$index)">{{subItem.metric_name}}</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li class="divider" ng-repeat-end></li>
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <span ng-switch-when="1"
+                                                              class="big-font">{{contentF.itemCode}}</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <button ng-click="functionCancelCustom();" type="button"
+                                                    class="btn btn-grey">Cancel
+                                            </button>
+                                            <button ng-show="buttonAdd" ng-click="saveCustomMetric()" type="button"
+                                                    class="btn btn-green">Save
+                                            </button>
+                                            <button ng-show="buttonEdit" ng-click="updateCustomMetric()" type="button"
+                                                    class="btn btn-green">Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+
+                        <td class="metric">
+                            <ul class="list-prop style-2 scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions">
+                                <button ng-show="showAddCustom" ng-click="addCustomMetric()" type="button"
+                                        class="btn btn-green mb-12"><i class="icon-plus-white mr-10"></i>Column
+                                </button>
+                                <li ng-repeat="metricChild in metricLeft" ng-class="{'disabled':fixColArr.indexOf(metricChild.metric_id) > -1}"
+                                    class="{{metricChild.classItem}} ">
+                                    <div class="item-list">{{metricChild.metric_name}}</div>
+                                    <div class="action">
+                                        <span ng-click="removeCustomMetric(metricChild.metric_id)"
+                                              ng-show="showAddCustom">Remove</span>
+                                        <span ng-show="showAddCustom"
+                                              ng-click="editCustomMetric(metricChild.metric_id)">Edit</span>
+                                        <button ng-click="addLeft(metricChild.metric_id,2)" type="button" class="next">
+                                            {{metricChild.charcButton}}
+                                        </button>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </td>
+                        <td class="metric drag-drop">
+                            <ul class="list-drag-drop scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions">
+                                <div id="fixed-col">
+                                <li class="fix-col" ng-repeat="fxcol in fixCol" data-json="{{fxcol}}">{{fxcol.metric_name}}</li>
+                                </div>
+                                <div id="sortable">
+                                <li ng-repeat="modCol in modifyCol track by $index" ng-class="{'hide':fixColArr.indexOf(modCol.metric_id) > -1}" data-json="{{modCol}}"
+                                    id="modify-column-st-{{modCol.metric_id}}" class="drag">{{modCol.metric_name}}
+                                    <button type="button" class="remove"
+                                            ng-click="addLeft(modCol.metric_id,3)"></button>
+                                </li>
+                                </div>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <form name="parentForm">
+                    <button ng-model="enbaleModal" ng-disabled="enableModal" ng-click="applyModal()" type="button" class="btn btn-green">Apply</button>
+                    <button type="reset" ng-click="functionCancel()" class="btn btn-grey">Cancel</button>
+                    <label for="save">
+                        <input type="checkbox" id="save" class="icheck" ng-model="isCheck"><span>Save this set of columns</span>
+                    </label>
+                    <div class="inline" style="vertical-align: top;">
+                        <input ng-show="isCheck" ng-model="popup.modify_name" ng-required="isCheck" type="text">
+                        <span ng-show="isError" class="error">Modify column name can not be empty</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

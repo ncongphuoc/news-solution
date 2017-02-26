@@ -1,0 +1,29 @@
+<div class="dropdown pull-right" uib-dropdown>
+    <button type="button" uib-dropdown-toggle class="btn btn-default">Columns<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li ng-repeat="item in datasource.columns.current">
+            <a href="" data-toggle="modal" ng-click="changeColumn(item.key)">{{item.value}}</a>
+        </li>
+        <li class="divider"></li>
+        <li class="has-check">
+            <div class="title-check">{{datasource.columns.custom.name}}</div>
+        </li>
+        <li ng-repeat="item in datasource.columns.custom.child">
+            <a href="" ng-if="item.is_show" class="item-check item-action" ng-class="{checked: item.checked}"><span
+                    ng-click="changeColumn(item.key,item.mods_value,item.value,item.mod_type,1)">{{item.value}}</span>
+                <button ng-if="!item.is_custom" ng-click="deleteColumn(item.key)" type="button" class="btn-action">
+                    Remove
+                </button>
+            </a>
+        </li>
+        <li class="divider" ng-show="show_pre_define"></li>
+        <li class="has-check" ng-show="show_pre_define">
+            <div class="title-check">{{datasource.columns.defined.name}}</div>
+        </li>
+        <li ng-show="show_pre_define" ng-repeat="item in datasource.columns.defined.child">
+            <a href="" class="item-check item-action" ng-class="{checked: item.checked}"
+               ng-click="changeColumn(item.key,item.mods_value,item.value,item.mod_type,1)">{{item.value}}</a>
+        </li>
+    </ul>
+</div>
+<modifycolumn idmodal="idmodalcolumn" typecolumn="typeitem" objcolumn="obj_column"></modifycolumn>

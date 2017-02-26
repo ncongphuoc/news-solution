@@ -1,0 +1,24 @@
+<div class="edit-item">
+    <a href="" ui-sref="{{routeName}}({{routeParams}})" ng-if="routeName && routeParams"
+       title="{{data[column_name]}}" ng-click="gotoPage($event)">
+        <span class="txt-color"><strong>{{data[column_name]}}</strong></span>
+    </a>
+    <a title="{{data[column_name]}}" class="edit-text" ng-click="edit(column_name)" style="cursor: pointer;" ng-if="!disable_edit">
+        <i class=" hover-visible" ng-class="{'icon-pen-grey':column_name == grid_options.columns_show_option}" ></i>
+    </a>
+    <div ng-include="template_edit"></div>
+    <div ng-include="template"></div>
+</div>
+<script type="text/ng-template" id="box_edit.html">
+    <div class="lable-edit-text popup-left"  ng-show="(column_name == show_flag)
+    && data['show_edit_name' + column_name] != undefined && data['show_edit_name' + column_name] == true"  >
+        <input type="text" placeholder="" class="form-control" ng-model="object_name">
+        <div class="wrap-btn-create">
+            <button type="button" class="btn btn-green" ng-click="save(object_name)">Save</button>
+            <button type="button" class="btn btn-grey" ng-click="close()">Cancel</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="template_1.html">
+    <span class="txt-grey-light" style="white-space: nowrap;" title="{{data[view_id]}}">{{data[view_id]}}</span>
+</script>

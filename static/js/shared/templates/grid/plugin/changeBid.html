@@ -1,0 +1,35 @@
+<div class="edit-item">
+    <span ng-if="data[column_name] == '--'">
+    --
+    </span>
+    <span ng-if="data[column_name] != '--'" style="white-space: nowrap">
+        {{data[column_name] != undefined ? (data[column_name] | number) + ' ₫' : '' }}
+    </span>
+    <!--show (Viewable)-->
+    <span ng-if="column_name == 'cpm_bid_price' && data.text_viewable_cpm != undefined">
+        {{data.text_viewable_cpm}}
+    </span>
+
+
+
+    <div class="wrap-table-left" ng-include="getEditTemplate()"></div>
+</div>
+<script type="text/ng-template" id="enable.html">
+    <div class="lable-edit-text edit-permission popup-right">
+        <p class="text-bids">In order to change this bid, you’ll first need to <strong>enable custom bids</strong> for this targeting method in this ad group.</p>
+        <hr>
+        <div class="clearfix">
+            <button type="button" class="btn btn-green" ng-click="enable(data)">Enable now</button>
+            <button type="button" class="btn btn-grey" ng-click="dismiss(data)">Dismiss</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="edit.html">
+    <div class="lable-edit-text popup-right">
+        <input type="text" placeholder="" class="form-control" adx-format-number ng-model="$parent.bid_price">
+        <div class="wrap-btn-create">
+            <button type="button" class="btn btn-green" ng-click="save(data)">Save</button>
+            <button type="button" class="btn btn-grey" ng-click="dismiss(data)">Cancel</button>
+        </div>
+    </div>
+</script>
